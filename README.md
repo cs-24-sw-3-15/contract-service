@@ -1,18 +1,24 @@
 # contract-service
 
-Things to cover:
+## Ruby version
+- `ruby3.3`
 
-* Ruby version
-`ruby3.3`
+## System dependencies
+- `libyaml`
+- `libvips`
 
-* System dependencies
-`libyaml-devel`
+## Configuration
+```bash
+bundle config set --local path vendor/bundle
+bundle install
+```
 
-* Configuration
-`bundle config set --local path vendor/bundle`
-`bundle install`
+## Database creation
+```bash
+bin/rails db:migrate
+```
 
-* Database creation
+## Things Left to do
 
 * Database initialization
 

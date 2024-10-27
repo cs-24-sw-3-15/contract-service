@@ -28,7 +28,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 # Lets validations work on active_storage [https://github.com/igorkasyanchuk/active_storage_validations]
 gem "active_storage_validations"
