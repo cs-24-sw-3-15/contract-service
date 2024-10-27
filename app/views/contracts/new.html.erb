@@ -1,0 +1,33 @@
+<h1>New Contract</h1>
+
+<% if @contract.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@contract.errors.count, "error") %> prohibited this contract from being created:</h2>
+    <ul>
+      <% @contract.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @contract do |form| %>
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <!-- TODO: Dynamically add multiple documents. -->
+  <%= form.fields_for :documents do |form| %>
+    <div>
+      <%= form.label :title, "Document Title" %>
+      <%= form.text_field :title %>
+    </div>
+    <div>
+      <%= form.label :title, "Document" %>
+      <%= form.file_field :file %>
+    </div>
+  <% end %>
+
+  <%= form.submit %>
+<% end %>
