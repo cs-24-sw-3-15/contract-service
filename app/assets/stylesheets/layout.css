@@ -1,0 +1,15 @@
+h1, h2, h3, h4, h5 {
+    margin: 0.5em 0;
+}
+
+.contract {
+    border: 1px solid black;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}

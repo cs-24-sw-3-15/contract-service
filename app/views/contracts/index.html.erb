@@ -1,0 +1,17 @@
+<h1>Contracts</h1>
+
+<p><%= link_to "New Contract", new_contract_path %></p>
+
+<% @contracts.each do |contract| %>
+  <div class="contract">
+    <h2><%= contract.title %></h2>
+    <ul>
+      <% contract.documents.each do |document| %>
+        <li>
+          <%= link_to document.title, url_for(document.file) %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to "View", contract_path(contract.id) %>
+  </div>
+<% end %>

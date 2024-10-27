@@ -1,0 +1,12 @@
+
+<div class="contract">
+  <h2><%= @contract.title %></h2>
+  <ul>
+    <% @contract.documents.each do |document| %>
+      <li>
+        <%= link_to document.title, url_for(document.file) %>
+      </li>
+    <% end %>
+  </ul>
+  <%= button_to "Destroy Contract", contract_path(@contract.id), method: :delete %>
+</div>
