@@ -8,7 +8,11 @@
     <ul>
       <% contract.documents.each do |document| %>
         <li>
-          <%= link_to document.title, url_for(document.file) %>
+          <%= link_to url_for(document.file) do %>
+            <%= document.title %>
+            <br>
+            <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed) %>
+          <% end %>
         </li>
       <% end %>
     </ul>
