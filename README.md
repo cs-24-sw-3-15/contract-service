@@ -18,6 +18,11 @@ bundle install
 bin/rails db:migrate
 ```
 
+## Run Development Server
+```bash
+bin/rails server
+```
+
 ## Things Left to do
 
 * Database initialization
