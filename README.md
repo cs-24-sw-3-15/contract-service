@@ -3,11 +3,13 @@
 ## Ruby version
 - `ruby3.3`
 
-## System dependencies
-- `libyaml`
-- `libvips`
+Good idea to use something like `rbenv` to install ruby.
 
-## Configuration
+## Gem system dependencies
+- [`libyaml-dev`](https://pkgs.org/search/?q=libyaml)
+- [`libvips-dev`](https://pkgs.org/search/?q=libvips)
+
+## Gem configuration
 ```bash
 bundle config set --local path vendor/bundle
 bundle install
@@ -18,7 +20,7 @@ bundle install
 bin/rails db:migrate
 ```
 
-## Run Development Server
+## Run Puma Development Server
 ```bash
 bin/rails server
 ```
