@@ -6,8 +6,10 @@
 Good idea to use something like `rbenv` to install ruby.
 
 ## Gem system dependencies
+- [ruby-dev](https://pkgs.org/search/?q=ruby-dev)
 - [`libyaml-dev`](https://pkgs.org/search/?q=libyaml)
 - [`libvips-dev`](https://pkgs.org/search/?q=libvips)
+- [mupdf](https://pkgs.org/search/?q=mupdf)
 
 ## Gem configuration
 ```bash
