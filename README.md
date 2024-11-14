@@ -1,15 +1,15 @@
 # contract-service
 
 ## Ruby version
-- `ruby3.3`
+Ruby 3.3
 
-Good idea to use something like `rbenv` to install ruby.
+Good idea to use `rbenv` to install ruby + ruby-dev.
 
 ## Gem system dependencies
-- [ruby-dev](https://pkgs.org/search/?q=ruby-dev)
+- [`ruby-dev`](https://pkgs.org/search/?q=ruby-dev)
 - [`libyaml-dev`](https://pkgs.org/search/?q=libyaml)
 - [`libvips-dev`](https://pkgs.org/search/?q=libvips)
-- [mupdf](https://pkgs.org/search/?q=mupdf)
+- [`mupdf`](https://pkgs.org/search/?q=mupdf)
 
 ## Gem configuration
 ```bash
