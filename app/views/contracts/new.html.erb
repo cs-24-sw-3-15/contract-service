@@ -1,33 +1,39 @@
-<h1>New Contract</h1>
+<div class="d-flex">
+  <!-- Sidebar Menu -->
+  <%= render MenuComponent.new(location: "submit-contract") %>
 
-<% if @contract.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@contract.errors.count, "error") %> prohibited this contract from being created:</h2>
-    <ul>
-      <% @contract.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+  <!-- Main Content -->
+  <h1>New Contract</h1>
 
-<%= form_with model: @contract do |form| %>
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <!-- TODO: Dynamically add multiple documents. -->
-  <%= form.fields_for :documents do |form| %>
-    <div>
-      <%= form.label :title, "Document Title" %>
-      <%= form.text_field :title %>
-    </div>
-    <div>
-      <%= form.label :title, "Document" %>
-      <%= form.file_field :file %>
+  <% if @contract.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@contract.errors.count, "error") %> prohibited this contract from being created:</h2>
+      <ul>
+        <% @contract.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
-  <%= form.submit %>
-<% end %>
+  <%= form_with model: @contract do |form| %>
+    <div>
+      <%= form.label :title %>
+      <%= form.text_field :title %>
+    </div>
+
+    <!-- TODO: Dynamically add multiple documents. -->
+    <%= form.fields_for :documents do |form| %>
+      <div>
+        <%= form.label :title, "Document Title" %>
+        <%= form.text_field :title %>
+      </div>
+      <div>
+        <%= form.label :title, "Document" %>
+        <%= form.file_field :file %>
+      </div>
+    <% end %>
+
+    <%= form.submit %>
+  <% end %>
+</div>

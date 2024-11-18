@@ -56,3 +56,5 @@ group :test do
 end
 
 gem "view_component", ">= 3.12.1"
+gem "bootstrap"
+gem "sassc-rails"

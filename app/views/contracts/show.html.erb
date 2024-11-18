@@ -1,12 +1,17 @@
+<div class="d-flex">
+  <!-- Sidebar Menu -->
+  <%= render MenuComponent.new(location: "contracts") %>
 
-<div class="contract">
-  <h2><%= @contract.title %></h2>
-  <ul>
-    <% @contract.documents.each do |document| %>
-      <li>
-        <%= link_to document.title, url_for(document.file) %>
-      </li>
-    <% end %>
-  </ul>
-  <%= button_to "Destroy Contract", contract_path(@contract), method: :delete %>
+  <!-- Main Content -->
+  <div class="contract">
+    <h2><%= @contract.title %></h2>
+    <ul>
+      <% @contract.documents.each do |document| %>
+        <li>
+          <%= link_to document.title, url_for(document.file) %>
+        </li>
+      <% end %>
+    </ul>
+    <%= button_to "Destroy Contract", contract_path(@contract), method: :delete %>
+  </div>
 </div>
