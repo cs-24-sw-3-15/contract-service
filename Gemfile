@@ -54,3 +54,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "view_component", ">= 3.12.1"
