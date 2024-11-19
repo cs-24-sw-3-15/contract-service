@@ -4,7 +4,7 @@
     <ul class="nav flex-column">
       <li class="nav-item">
         <%= link_to dashboard_path,
-                    class: "nav-link #{'active bg-primary text-white' if @location == 'dashboard'} rounded mb-2",
+                    class: "nav-link #{'active bg-primary text-white' if request.path == '/dashboard'} rounded mb-2",
                     id: 'dashboard-link',
                     data: { toggle: 'tooltip', placement: 'top' } do %>
           <i class="bi bi-speedometer2"></i> Dashboard
@@ -12,7 +12,7 @@
       </li>
       <li class="nav-item">
         <%= link_to contracts_path,
-                    class: "nav-link #{'active bg-primary text-white' if @location == 'contracts'} rounded mb-2",
+                    class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts'} rounded mb-2",
                     id: 'contracts-link',
                     data: { toggle: 'tooltip', placement: 'top' } do %>
           <i class="bi bi-file-text"></i> Contracts
@@ -20,7 +20,7 @@
       </li>
       <li class="nav-item">
         <%= link_to new_contract_path,
-                    class: "nav-link #{'active bg-primary text-white' if @location == 'submit-contract'} rounded mb-2",
+                    class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts/new'} rounded mb-2",
                     id: 'new-contract-link',
                     data: { toggle: 'tooltip', placement: 'top' } do %>
           <i class="bi bi-upload"></i> Submit Contract
