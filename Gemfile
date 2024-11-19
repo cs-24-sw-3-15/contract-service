@@ -57,3 +57,4 @@ end
 
 gem "bootstrap"
 gem "sassc-rails"
+gem "sassc", "~> 2.1", "< 2.2"
