@@ -8,7 +8,9 @@ class DocumentTest < ActiveSupport::TestCase
 
     assert_not document.valid?
   end
+end
 
+module DocumentHelper
   # Helper method to create a mock file
   def mock_file(size:, content_type:, filename:)
     file_mock = StringIO.new
