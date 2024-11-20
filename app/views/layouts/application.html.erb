@@ -18,6 +18,11 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="d-flex">
+      <%= render 'layouts/menu' %>
+      <div class="flex-grow-1 p-4">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
