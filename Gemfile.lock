@@ -266,11 +266,7 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (2.3.2)
-    sassc (2.1.0)
-      ffi (~> 1.9)
-    sassc (2.1.0-x86-linux)
-      ffi (~> 1.9)
-    sassc (2.1.0-x86_64-linux)
+    sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
       railties (>= 4.0.0)
@@ -357,7 +353,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.0.0)
   rubocop-rails-omakase
-  sassc (~> 2.1, < 2.2)
+  sassc (~> 2.4)
   sassc-rails
   selenium-webdriver
   sprockets-rails
