@@ -1,24 +1,38 @@
 class ContractsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @contracts = Contract.all
+    # if admin? then all, otherwise only contracts made by that user.
+    @contracts = policy_scope(Contract)
   end
+
   def show
-    @contract = Contract.find(params["id"])
+    @contract = authorize Contract.find(params["id"])
   end
+
   def new
     # HACK: Hardcoding one empty "document" to allow view to function.
-    @contract = Contract.new(documents_attributes: [ {} ])
+    @contract = authorize Contract.new(documents_attributes: [ {} ])
   end
+
   def create
     @contract = Contract.new(contract_params)
+
+    @contract.created_by = current_user
+    @contract.documents.each { |doc| doc.created_by = current_user }
+
+    authorize @contract
+
     if @contract.save
-      redirect_to contracts_path
+      redirect_to contracts_path, notice: "Contract successfully created."
     else
       render :new
     end
   end
+
   def destroy
-    Contract.find(params["id"]).destroy
+    @contract = authorize Contract.find(params["id"])
+    @contract.destroy
     redirect_to contracts_path
   end
 

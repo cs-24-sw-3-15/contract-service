@@ -60,3 +60,5 @@ gem "sassc-rails"
 gem "sassc", "~> 2.1", "< 2.2"
 gem "font-awesome-sass", "~> 6.5"
 gem "devise", "~> 4.9"
+
+gem "pundit", "~> 2.4"

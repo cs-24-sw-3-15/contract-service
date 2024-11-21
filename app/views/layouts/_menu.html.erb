@@ -34,6 +34,11 @@
       <% end %>
     </li>
 
+    <!-- Legal Advisor -->
+    <li class="nav-item">
+      <h6 class="text-muted mt-4 mb-2 px-2">Legal</h6>
+    </li>
+
     <!-- Pending Contracts -->
     <li class="nav-item">
       <%= link_to pending_contracts_path,
@@ -67,22 +72,24 @@
       <% end %>
     </li>
 
-    <!-- Admin Section Header -->
-    <li class="nav-item">
-      <h6 class="text-muted mt-4 mb-2 px-2">Admin Options</h6>
-    </li>
+    <% if current_user&.admin? %>
+      <!-- Admin Section Header -->
+      <li class="nav-item">
+        <h6 class="text-muted mt-4 mb-2 px-2">Admin Options</h6>
+      </li>
 
-    <!-- Users -->
-    <li class="nav-item">
-      <%= link_to users_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/users'} rounded d-flex align-items-center mb-2 text-dark",
-                  id: 'users-link',
-                  data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="fa-solid fa-users" style="width: 20px; text-align: center;"></i>
-        <span class="ms-2">Users</span>
-      <% end %>
-    </li>
-  </ul>
+      <!-- Users -->
+      <li class="nav-item">
+        <%= link_to users_path,
+                    class: "nav-link #{'active bg-primary text-white' if request.path == '/users'} rounded d-flex align-items-center mb-2 text-dark",
+                    id: 'users-link',
+                    data: { toggle: 'tooltip', placement: 'top' } do %>
+          <i class="fa-solid fa-users" style="width: 20px; text-align: center;"></i>
+          <span class="ms-2">Users</span>
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
 
   <!-- Profile Section -->
   <ul class="nav flex-column mt-auto">
