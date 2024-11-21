@@ -1,32 +1,104 @@
-<nav class="bg-light border-end vh-100 p-3" style="width: 250px;">
-  <h5 class="text-center mb-4">Contracts System</h5>
-  <ul class="nav flex-column">
+<nav class="bg-light border-end vh-100 p-3 d-flex flex-column" style="width: 250px;">
+  <h5 class="text-center mb-4 text-primary fw-bold">Contracts System</h5>
+  <ul class="nav flex-column flex-grow-1">
+    <!-- Dashboard -->
     <li class="nav-item">
       <%= link_to dashboard_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/dashboard'} rounded mb-2",
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/dashboard'} rounded d-flex align-items-center mb-2 text-dark",
                   id: 'dashboard-link',
                   data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="bi bi-speedometer2"></i> Dashboard
+        <i class="fa-solid fa-gauge-high" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Dashboard</span>
       <% end %>
     </li>
+
+    <!-- Contracts -->
     <li class="nav-item">
       <%= link_to contracts_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts'} rounded mb-2",
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts'} rounded d-flex align-items-center mb-2 text-dark",
                   id: 'contracts-link',
                   data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="bi bi-file-text"></i> Contracts
+        <i class="fa-solid fa-file-contract" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Contracts</span>
       <% end %>
     </li>
+
+    <!-- Submit Contract -->
     <li class="nav-item">
       <%= link_to new_contract_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts/new'} rounded mb-2",
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts/new'} rounded d-flex align-items-center mb-2 text-dark",
                   id: 'new-contract-link',
                   data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="bi bi-upload"></i> Submit Contract
+        <i class="fa-solid fa-file-signature" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Submit Contract</span>
       <% end %>
     </li>
-    <li class="nav-item">
 
+    <!-- Pending Contracts -->
+    <li class="nav-item">
+      <%= link_to pending_contracts_path,
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/pending_contracts'} rounded d-flex align-items-center mb-2 text-dark",
+                  id: 'pending-contracts-link',
+                  data: { toggle: 'tooltip', placement: 'top' } do %>
+        <i class="fa-solid fa-file-circle-question" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Pending Contracts</span>
+      <% end %>
+    </li>
+
+    <!-- Suppliers -->
+    <li class="nav-item">
+      <%= link_to suppliers_path,
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/suppliers'} rounded d-flex align-items-center mb-2 text-dark",
+                  id: 'suppliers-link',
+                  data: { toggle: 'tooltip', placement: 'top' } do %>
+        <i class="fa-solid fa-industry" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Suppliers</span>
+      <% end %>
+    </li>
+
+    <!-- Affiliates -->
+    <li class="nav-item">
+      <%= link_to affiliates_path,
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/affiliates'} rounded d-flex align-items-center mb-2 text-dark",
+                  id: 'affiliates-link',
+                  data: { toggle: 'tooltip', placement: 'top' } do %>
+        <i class="fa-solid fa-building" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Affiliates</span>
+      <% end %>
+    </li>
+
+    <!-- Admin Section Header -->
+    <li class="nav-item">
+      <h6 class="text-muted mt-4 mb-2 px-2">Admin Options</h6>
+    </li>
+
+    <!-- Users -->
+    <li class="nav-item">
+      <%= link_to users_path,
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/users'} rounded d-flex align-items-center mb-2 text-dark",
+                  id: 'users-link',
+                  data: { toggle: 'tooltip', placement: 'top' } do %>
+        <i class="fa-solid fa-users" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Users</span>
+      <% end %>
+    </li>
+  </ul>
+
+  <!-- Profile Section -->
+  <ul class="nav flex-column mt-auto">
+    <li class="nav-item d-flex align-items-center">
+      <img src="<%= asset_path('profile_picture.png') %>" alt="Profile Picture" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+      <div class="flex-grow-1">
+        <h6 class="mb-0">Oskar Sun</h6>
+        <small class="text-muted">Admin</small>
+      </div>
+      <%= link_to contracts_path,
+                  method: :delete,
+                  class: "text-dark ms-2",
+                  id: 'logout-link',
+                  data: { toggle: 'tooltip', placement: 'top' } do %>
+        <i class="fa-solid fa-right-from-bracket"></i>
+      <% end %>
     </li>
   </ul>
 </nav>
