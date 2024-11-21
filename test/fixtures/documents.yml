@@ -1,7 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
+basic_document:
+  title: Basic PDF File
+  contract: basic
 
-two:
-  title: MyString
+advanced_document_one:
+  title: My Advanced PDF File
+  contract: advanced
+
+advanced_document_two:
+  title: My Suppliementary PDF File
+  contract: advanced

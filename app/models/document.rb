@@ -1,5 +1,6 @@
 class Document < ApplicationRecord
   has_one_attached :file
+  belongs_to :contract
 
   validates :title, presence: true
   validates :file,
