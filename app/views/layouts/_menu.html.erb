@@ -87,17 +87,37 @@
   <!-- Profile Section -->
   <ul class="nav flex-column mt-auto">
     <li class="nav-item d-flex align-items-center">
-      <img src="<%= asset_path('profile_picture.png') %>" alt="Profile Picture" class="rounded-circle me-2" style="width: 40px; height: 40px;">
-      <div class="flex-grow-1">
-        <h6 class="mb-0">Oskar Sun</h6>
-        <small class="text-muted">Admin</small>
-      </div>
-      <%= link_to contracts_path,
-                  method: :delete,
-                  class: "text-dark ms-2",
-                  id: 'logout-link',
-                  data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="fa-solid fa-right-from-bracket"></i>
+      <% if user_signed_in? %>
+        <!--<img src="<%= asset_path('profile_picture.png') %>" alt="Profile Picture" class="rounded-circle me-2" style="width: 40px; height: 40px;">-->
+        <%= image_tag avatar_url(current_user.email),
+          alt: "Profile Picture",
+          class: "rounded-circle me-2",
+          size: "40" %>
+        <div class="flex-grow-1">
+          <!-- I am sorry my CSS overlords -->
+          <h6 class="mb-0 text-truncate" style="max-width: 100px;">
+            <%= current_user.name.presence || current_user.email %>
+          </h6>
+          <small class="text-muted">
+            <%= current_user.role.humanize %>
+          </small>
+        </div>
+        <%= button_to destroy_user_session_path,
+                    method: :delete,
+                    class: "btn text-dark ms-2",
+                    id: 'logout-button',
+                    data: { toggle: 'tooltip', placement: 'top' } do %>
+          <i class="fa-solid fa-right-from-bracket"></i>
+        <% end %>
+      <% else %>
+        <%= link_to new_user_session_path,
+                    method: :get,
+                    class: "btn btn-primary w-100",
+                    id: 'login-link',
+                    data: { toggle: 'tooltip', placement: 'top' } do %>
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="ms-2">Log In</span>
+        <% end %>
       <% end %>
     </li>
   </ul>
