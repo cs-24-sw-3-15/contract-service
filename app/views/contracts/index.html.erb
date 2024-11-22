@@ -14,10 +14,14 @@
       <ul>
         <% contract.documents.each do |document| %>
           <li>
-            <%= link_to url_for(document.file) do %>
+            <%= link_to rails_blob_path(document.file, disposition: "attachment") do %>
               <%= document.title %>
               <br>
-              <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
+              <% if document.file.representable? %>
+                <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
+              <% else %>
+                Download
+              <% end %>
             <% end %>
           </li>
         <% end %>
