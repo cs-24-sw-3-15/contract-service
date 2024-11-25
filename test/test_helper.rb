@@ -4,6 +4,8 @@ require "rails/test_help"
 
 module ActiveSupport
   class TestCase
+    include Devise::Test::IntegrationHelpers
+
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors)
 
@@ -12,4 +14,8 @@ module ActiveSupport
 
     # Add more helper methods to be used by all tests here...
   end
+end
+
+Minitest.after_run do
+  FileUtils.rm_rf(ActiveStorage::Blob.services.fetch(:test).root)
 end

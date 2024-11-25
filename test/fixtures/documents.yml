@@ -2,12 +2,15 @@
 
 basic_document:
   title: Basic PDF File
-  contract: basic
+  contract: basic_contract
+  created_by: basic_user
 
-advanced_document_one:
+advanced_document_1:
   title: My Advanced PDF File
-  contract: advanced
+  contract: advanced_contract
+  created_by: admin_user
 
-advanced_document_two:
+advanced_document_2:
   title: My Suppliementary PDF File
-  contract: advanced
+  contract: advanced_contract
+  created_by: admin_user

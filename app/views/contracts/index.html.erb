@@ -6,13 +6,22 @@
   <% @contracts.each do |contract| %>
     <div class="contract border rounded p-3 mb-3 shadow-sm">
       <h2><%= contract.title %></h2>
+      <% if current_user.admin? %>
+        <small>Author: <%= contract.created_by.name %> &lt;<%=
+          mail_to contract.created_by.email, subject: "Regarding contract '#{contract.title}'"
+        %>&gt;</small>
+      <% end %>
       <ul>
         <% contract.documents.each do |document| %>
           <li>
-            <%= link_to url_for(document.file) do %>
+            <%= link_to rails_blob_path(document.file, disposition: "attachment") do %>
               <%= document.title %>
               <br>
-              <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
+              <% if document.file.representable? %>
+                <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
+              <% else %>
+                Download
+              <% end %>
             <% end %>
           </li>
         <% end %>

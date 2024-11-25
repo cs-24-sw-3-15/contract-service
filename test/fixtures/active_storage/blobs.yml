@@ -1,0 +1,3 @@
+basic_document_file_blob: <%= ActiveStorage::FixtureSet.blob filename: "basic_document.pdf", service_name: "test" %>
+advanced_document_1_file_blob: <%= ActiveStorage::FixtureSet.blob filename: "advanced_document_1.pdf", service_name: "test" %>
+advanced_document_2_file_blob: <%= ActiveStorage::FixtureSet.blob filename: "advanced_document_2.pdf", service_name: "test" %>

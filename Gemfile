@@ -53,10 +53,13 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "rails-controller-testing", "~> 1.0"
 end
 
 gem "bootstrap"
 gem "sassc-rails"
 gem "sassc", "~> 2.1", "< 2.2"
-
 gem "font-awesome-sass", "~> 6.5"
+gem "devise", "~> 4.9"
+
+gem "pundit", "~> 2.4"

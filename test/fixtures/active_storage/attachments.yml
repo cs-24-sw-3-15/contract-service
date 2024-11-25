@@ -1,0 +1,14 @@
+basic_document_file:
+  name: file
+  record: basic_document (Document)
+  blob: basic_document_file_blob
+
+advanced_document_1_file:
+  name: file
+  record: advanced_document_1 (Document)
+  blob: advanced_document_1_file_blob
+
+advanced_document_2_file:
+  name: file
+  record: advanced_document_2 (Document)
+  blob: advanced_document_2_file_blob
