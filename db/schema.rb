@@ -75,6 +75,14 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_tags_on_ancestry"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.integer "role", default: 0, null: false

@@ -67,3 +67,5 @@ gem "pundit", "~> 2.4"
 gem "aasm", "~> 5.5"
 
 gem "after_commit_everywhere", "~> 1.4"
+
+gem "ancestry", "~> 4.3"
