@@ -17,4 +17,3 @@ class Contract < ApplicationRecord
     end
   end
 end
-
