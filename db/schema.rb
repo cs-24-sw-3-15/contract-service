@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_25_095123) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_26_150659) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,6 +53,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_25_095123) do
     t.date "start_date"
     t.date "end_date"
     t.integer "created_by_id", null: false
+    t.string "state"
+    t.integer "status", default: 0
     t.index ["created_by_id"], name: "index_contracts_on_created_by_id"
   end
 
