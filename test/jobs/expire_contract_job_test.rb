@@ -12,10 +12,12 @@ class ExpireContractJobTest < ActiveJob::TestCase
       documents: [ documents(:basic_document) ],
     )
 
-    contract.update!(end_date: 1.day.ago)
+    assert_enqueued_with job: ExpireContractJob, at: Date.yesterday.to_datetime do
+      contract.update! end_date: Date.yesterday.to_datetime
+    end
 
-    # HACK: This bypasses wait_until method and instead hits the return guard in perform().
-    perform_enqueued_jobs
+    perform_enqueued_jobs at: Time.now
+    assert_performed_jobs 1
 
     contract.reload
     assert_equal "expired", contract.state
@@ -23,16 +25,20 @@ class ExpireContractJobTest < ActiveJob::TestCase
 
   # unit tests
   test "should queue job" do
-    contract = Contract.create(
+    contract = Contract.new(
       state: "active",
-      start_date: Date.yesterday,
+      start_date: Date.yesterday.to_datetime,
+      end_date: Date.tomorrow.to_datetime,
       title: "Test Contract",
       created_by: users(:basic_user),
       documents: [ documents(:basic_document) ],
     )
 
-    assert_enqueued_with job: ExpireContractJob do
-      contract.update!(end_date: 1.day.from_now)
+    assert_enqueued_with job: ExpireContractJob, at: Date.tomorrow.to_datetime do
+      contract.save!
     end
+
+    # Since state is already active on creation, only end_date should get scheduled.
+    assert_enqueued_jobs 1
   end
 end

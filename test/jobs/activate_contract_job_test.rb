@@ -7,15 +7,15 @@ class ActivateContractJobTest < ActiveJob::TestCase
       title: "Test Contract",
       documents: [ documents(:basic_document) ],
       created_by: users(:basic_user),
-      start_date: 1.day.from_now,
+      start_date: Date.tomorrow.to_datetime,
     )
 
     assert_enqueued_jobs 1 do
       contract.save!
     end
 
-    # HACK: This bypasses wait_until method and instead hits the return guard in perform().
-    perform_enqueued_jobs
+    perform_enqueued_jobs at: Time.now
+    assert_performed_jobs 0
 
     contract.reload
     assert_equal "queued", contract.state
@@ -32,13 +32,11 @@ class ActivateContractJobTest < ActiveJob::TestCase
       contract.save!
     end
 
-    assert_enqueued_jobs 1 do
-      contract.update!(start_date: 1.day.ago)
+    assert_enqueued_with job: ActivateContractJob, at: Date.yesterday.to_datetime do
+      contract.update! start_date: Date.yesterday.to_datetime
     end
 
-    # HACK: This bypasses wait_until method and instead hits the return guard in perform().
-    perform_enqueued_jobs
-
+    perform_enqueued_jobs at: Time.now
     assert_performed_jobs 1
 
     contract.reload
@@ -51,12 +49,12 @@ class ActivateContractJobTest < ActiveJob::TestCase
       title: "Test Contract",
       documents: [ documents(:basic_document) ],
       created_by: users(:basic_user),
-      start_date: 1.day.from_now,
+      start_date: Date.tomorrow.to_datetime,
     )
 
     assert_no_enqueued_jobs
 
-    assert_enqueued_with(job: ActivateContractJob) do
+    assert_enqueued_with job: ActivateContractJob do
       contract.save!
     end
   end
