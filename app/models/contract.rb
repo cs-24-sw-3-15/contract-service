@@ -10,7 +10,12 @@ class Contract < ApplicationRecord
 
   enum :status, [ :pending, :approved, :denied ]
 
+  scope :active, -> { where(status: :approved).where(state: :active) }
+
   before_save :enqueue_if_possible, if: :will_save_change_to_start_date?
+  before_save :activate_if_possible, if: :will_save_change_to_start_date?
+  before_save :expire_if_possible, if: :will_save_change_to_end_date?
+
   after_save :try_schedule_activation, if: :saved_change_to_start_date?
   after_save :try_schedule_expiration, if: :saved_change_to_end_date?
 
@@ -33,11 +38,7 @@ class Contract < ApplicationRecord
     end
   end
 
-  def enqueue_if_possible
-    return unless may_enqueue?
-
-    enqueue
-  end
+  private
 
   def try_schedule_activation
     return if start_date.nil?
@@ -55,7 +56,19 @@ class Contract < ApplicationRecord
     ExpireContractJob.set(wait_until: end_date.to_datetime).perform_later(id)
   end
 
-  private
+
+  def enqueue_if_possible
+    enqueue if may_enqueue?
+  end
+
+  def activate_if_possible
+    activate if may_activate?
+  end
+
+  def expire_if_possible
+    expire if may_expire?
+  end
+
 
   def can_enqueue?
     return false if start_date.nil?

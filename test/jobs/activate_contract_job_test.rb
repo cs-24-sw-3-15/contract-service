@@ -2,7 +2,7 @@ require "test_helper"
 
 class ActivateContractJobTest < ActiveJob::TestCase
   # integration tests
-  test "update in future should set state to queued" do
+  test "update in future should schedule and set state to queued" do
     contract = Contract.new(
       title: "Test Contract",
       documents: [ documents(:basic_document) ],
@@ -22,28 +22,22 @@ class ActivateContractJobTest < ActiveJob::TestCase
   end
 
   test "update in past should set state to active" do
-    contract = Contract.new(
+    contract = Contract.create(
       title: "Test Contract",
       documents: [ documents(:basic_document) ],
       created_by: users(:basic_user),
     )
 
-    assert_no_enqueued_jobs do
-      contract.save!
-    end
+    assert_no_enqueued_jobs
 
-    assert_enqueued_with job: ActivateContractJob, at: Date.yesterday.to_datetime do
-      contract.update! start_date: Date.yesterday.to_datetime
-    end
+    contract.update! start_date: Date.yesterday.to_datetime
 
-    perform_enqueued_jobs at: Time.now
-    assert_performed_jobs 1
+    assert_no_enqueued_jobs
 
     contract.reload
     assert_equal "active", contract.state
   end
 
-  # unit tests
   test "should queue job only after save" do
     contract = Contract.new(
       title: "Test Contract",
