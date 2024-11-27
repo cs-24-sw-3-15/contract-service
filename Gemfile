@@ -63,3 +63,7 @@ gem "font-awesome-sass", "~> 6.5"
 gem "devise", "~> 4.9"
 
 gem "pundit", "~> 2.4"
+
+gem "aasm", "~> 5.5"
+
+gem "after_commit_everywhere", "~> 1.4"
