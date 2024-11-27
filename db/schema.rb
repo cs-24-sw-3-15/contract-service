@@ -55,6 +55,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_25_095745) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "start_date"
+    t.date "end_date"
     t.integer "created_by_id", null: false
     t.index ["created_by_id"], name: "index_contracts_on_created_by_id"
   end
