@@ -1,0 +1,2 @@
+class Affiliate < Company
+end
