@@ -2,54 +2,62 @@ require "test_helper"
 
 class ActivateContractJobTest < ActiveJob::TestCase
   # integration tests
-  test "should set contract state to queued" do
+  test "update in future should set state to queued" do
     contract = Contract.new(
       title: "Test Contract",
+      documents: [ documents(:basic_document) ],
       created_by: users(:basic_user),
-      )
-    contract.documents << documents(:basic_document)
-    contract.id = 1
-    contract.save!
+      start_date: 1.day.from_now,
+    )
 
-    contract.update(start_date: 1.day.from_now)
-    contract.save!
+    assert_enqueued_jobs 1 do
+      contract.save!
+    end
+
+    # HACK: This bypasses wait_until method and instead hits the return guard in perform().
+    perform_enqueued_jobs
 
     contract.reload
-    contract = Contract.find_by(id: 1)
     assert_equal "queued", contract.state
   end
 
-  test "should set contract state to active" do
+  test "update in past should set state to active" do
     contract = Contract.new(
       title: "Test Contract",
+      documents: [ documents(:basic_document) ],
       created_by: users(:basic_user),
-      )
-    contract.documents << documents(:basic_document)
-    contract.id = 2
-    contract.save!
+    )
 
-    contract.start_date = 1.day.ago
-    contract.save!
+    assert_no_enqueued_jobs do
+      contract.save!
+    end
+
+    assert_enqueued_jobs 1 do
+      contract.update!(start_date: 1.day.ago)
+    end
+
+    # HACK: This bypasses wait_until method and instead hits the return guard in perform().
+    perform_enqueued_jobs
+
+    assert_performed_jobs 1
 
     contract.reload
-    contract = Contract.find_by(id: 2)
     assert_equal "active", contract.state
   end
 
   # unit tests
-  test "should queue job" do
+  test "should queue job only after save" do
     contract = Contract.new(
-      start_date: 1.day.from_now,
       title: "Test Contract",
+      documents: [ documents(:basic_document) ],
       created_by: users(:basic_user),
-      )
-    contract.documents << documents(:basic_document)
-    contract.id = 1
-    contract.save!
+      start_date: 1.day.from_now,
+    )
+
+    assert_no_enqueued_jobs
 
     assert_enqueued_with(job: ActivateContractJob) do
-      contract.schedule_activation
+      contract.save!
     end
   end
 end
-
