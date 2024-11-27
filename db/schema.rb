@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_21_222515) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_25_095745) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,18 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_222515) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "affiliates", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.integer "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "contracts", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -55,6 +67,11 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_222515) do
     t.integer "created_by_id", null: false
     t.index ["contract_id"], name: "index_documents_on_contract_id"
     t.index ["created_by_id"], name: "index_documents_on_created_by_id"
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
