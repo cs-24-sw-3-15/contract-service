@@ -1,3 +1,2 @@
 class Supplier < Company
-
 end
