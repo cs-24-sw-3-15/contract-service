@@ -12,3 +12,8 @@ admin_user:
   name: Ida
   email: ida@example.com
   role: admin
+
+legal_user:
+  name: Jesper
+  email: Jesper@example.com
+  role: legal
