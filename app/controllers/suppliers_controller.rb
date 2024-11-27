@@ -1,6 +1,6 @@
 class SuppliersController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_supplier, except: :index
+  before_action :authorize_supplier
 
   def index
     @suppliers = policy_scope(Supplier)
