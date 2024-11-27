@@ -1,0 +1,20 @@
+<h1>Suppliers</h1>
+<%= link_to 'Add New Supplier', new_supplier_path, class: 'btn btn-primary' %>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Supplier Name</th>
+    <th>Supplier Number</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @suppliers.each do |supplier| %>
+    <tr>
+      <td><%= supplier.name %></td>
+      <td><%= supplier.supplier_number %></td>
+      <td></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
