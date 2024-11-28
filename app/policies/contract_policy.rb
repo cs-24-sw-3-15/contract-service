@@ -11,7 +11,10 @@ class ContractPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    return true if @user.privileged?
+    return true if @record.created_by == @user
+
+    false
   end
 
   def destroy?
@@ -26,7 +29,7 @@ class ContractPolicy < ApplicationPolicy
       if @user.privileged?
         scope.all
       else
-        scope.where(created_by: user)
+        scope.where(created_by: @user)
       end
     end
   end

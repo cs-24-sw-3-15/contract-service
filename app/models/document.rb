@@ -1,5 +1,5 @@
 class Document < ApplicationRecord
-  has_one_attached :file
+  has_one_attached :file, dependent: :destroy
   belongs_to :contract
   belongs_to :created_by, class_name: "User"
 
