@@ -1,7 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: First Folder
+root_folder:
+  id: 1
+  name: Root Folder
+  ancestry: "/"
 
-two:
+sub_folder:
+  id: 2
   name: Second Folder
+  ancestry: "/1/"
