@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum :role, [ "user", "admin" ]
+  enum :role, [ "user", "admin", "legal" ]
   has_many :contracts
   has_many :documents
 
@@ -9,7 +9,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :trackable
 
-  def admin?
-    role == "admin"
+  def privileged?
+    admin? || legal?
   end
 end
