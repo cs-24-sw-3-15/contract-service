@@ -1,6 +1,6 @@
 require "test_helper"
 
-class TagTest < ActiveSupport::TestCase
+class FolderTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_122517) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,19 +68,19 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
     t.index ["created_by_id"], name: "index_documents_on_created_by_id"
   end
 
+  create_table "folders", force: :cascade do |t|
+    t.string "name"
+    t.string "ancestry", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ancestry"], name: "index_folders_on_ancestry"
+  end
+
   create_table "suppliers", force: :cascade do |t|
     t.string "name"
     t.integer "supplier_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "ancestry"
-    t.index ["ancestry"], name: "index_tags_on_ancestry"
   end
 
   create_table "users", force: :cascade do |t|
