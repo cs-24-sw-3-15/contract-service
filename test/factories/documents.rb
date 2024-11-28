@@ -4,6 +4,6 @@ FactoryBot.define do
     association :contract
     association :created_by, factory: :user
 
-    file { fixture_file_upload("basic_document.pdf", "application/pdf") }
+    file { Rack::Test::UploadedFile.new("test/fixtures/files/basic_document.pdf", "application/pdf") }
   end
 end
