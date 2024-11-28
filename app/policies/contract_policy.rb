@@ -1,6 +1,6 @@
 class ContractPolicy < ApplicationPolicy
   def show?
-    return true if @user.admin?
+    return true if @user.privileged?
     return true if @record.created_by == @user
 
     false
@@ -15,7 +15,7 @@ class ContractPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return true if @user.admin?
+    return true if @user.privileged?
     return true if @record.created_by == @user
 
     false
@@ -23,7 +23,7 @@ class ContractPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      if user.admin?
+      if @user.privileged?
         scope.all
       else
         scope.where(created_by: user)

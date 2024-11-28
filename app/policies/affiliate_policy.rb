@@ -1,7 +1,7 @@
 class AffiliatePolicy < ApplicationPolicy
-  class Scope < Scope
+  class Scope < ApplicationPolicy::Scope
     def resolve
-      if user.admin? || user.legal?
+      if @user.privileged?
         scope.all
       else
         scope.none
@@ -10,14 +10,14 @@ class AffiliatePolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin? || user.legal?
+    @user.privileged?
   end
 
   def new?
-    user.admin? || user.legal?
+    create?
   end
 
   def create?
-    user.admin? || user.legal?
+    @user.privileged?
   end
 end
