@@ -12,7 +12,7 @@ class SuppliersController < ApplicationController
   def create
     @supplier = authorize Supplier.new(supplier_params)
     if @supplier.save
-      redirect_to suppliers_path, notice: 'Supplier was successfully created.'
+      redirect_to suppliers_path, notice: "Supplier was successfully created."
     else
       render :new
     end

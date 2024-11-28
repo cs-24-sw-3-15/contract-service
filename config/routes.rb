@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   resources :contracts, only: [ :index, :show, :new, :create, :destroy ]
-  resources :suppliers, only: [:index, :new, :create]
-  resources :affiliates, only: [:index, :new, :create]
+  resources :suppliers, only: [ :index, :new, :create ]
+  resources :affiliates, only: [ :index, :new, :create ]
 
   get "dashboard" => "dashboard#index", as: :dashboard
   get "suppliers" => redirect("/contracts"), status: 302

@@ -12,7 +12,7 @@ class AffiliatesController < ApplicationController
   def create
     @affiliate = authorize Affiliate.new(affiliate_params)
     if @affiliate.save
-      redirect_to affiliates_path, notice: 'Affiliate was successfully created.'
+      redirect_to affiliates_path, notice: "Affiliate was successfully created."
     else
       render :new
     end
