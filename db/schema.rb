@@ -73,6 +73,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_125614) do
   create_table "labels", force: :cascade do |t|
     t.string "title", null: false
     t.string "tag", null: false
+    t.string "identifier", limit: 5, null: false
     t.string "color", limit: 7
     t.string "ancestry", null: false
     t.datetime "created_at", null: false

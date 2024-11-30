@@ -1,0 +1,28 @@
+<h1>Labels</h1>
+<%= link_to 'Add New Label', new_label_path, class: 'btn btn-primary' %>
+<table class="table table-striped align-middle">
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Tag</th>
+    <th>Color</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @labels.each do |label| %>
+    <tr>
+      <td><%= label.title %></td>
+      <td><%= label.tag %></td>
+      <td><span class="badge rounded-pill", style="background-color: <%= label.color %>"><%= label.color %></span></td>
+      <td>
+        <%= link_to "View", label_path(label), class: "btn btn-secondary" %>
+        <%= button_to "Destroy",
+          label_path(label),
+          method: :delete,
+          class: "btn btn-danger" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

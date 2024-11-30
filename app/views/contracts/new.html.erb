@@ -18,6 +18,11 @@
     <%= form.text_field :title %>
   </div>
 
+  <div>
+    <%= form.label :label %>
+    <%= form.select :label_id, @labels, { include_blank: 'None' }, class: 'form-select' %>
+  </div>
+
   <!-- TODO: Dynamically add multiple documents. -->
   <%= form.fields_for :documents do |form| %>
     <div>

@@ -21,17 +21,17 @@ jane = User.where(name: "Jane", email: "jane@example.com").first_or_create!(
 # Colors from https://coolors.co/palette/f94144-f3722c-f8961e-f9844a-f9c74f-90be6d-43aa8b-4d908e-577590-277da1
 
 insurance = Label.where(title: "Contracts").first_or_create!(
-  tag: "01",
+  identifier: "01",
   color: "#f94144", # Red
 )
 
 real_estate = Label.where(title: "Contracts").first_or_create!(
-  tag: "02",
+  identifier: "02",
   color: "#277da1", # Blue
 )
 
 lease = Label.where(title: "Lease").first_or_create!(
-  tag: "02.01",
+  identifier: "01",
   color: "#277da1", # Blue
   parent: real_estate,
 )
