@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-root_folder:
+real_estate:
   id: 1
-  name: Root Folder
   ancestry: "/"
+  tag: "02"
+  name: Insurance
 
-sub_folder:
+lease:
   id: 2
-  name: Second Folder
   ancestry: "/1/"
+  tag: "02.01"
+  name: Lease
