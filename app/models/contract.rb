@@ -5,8 +5,17 @@ class Contract < ApplicationRecord
   belongs_to :created_by, class_name: "User"
   belongs_to :label, optional: true
 
+  belongs_to :supplier, optional: true
+  belongs_to :affiliate, optional: true
+
+  validates :supplier_id, presence: true, if: :status_is_approved?
+  validates :supplier_number, presence: true, if: :status_is_approved?
+  validates :affiliate_name, presence: true, if: :status_is_approved?
+  validates :affiliate_id, presence: true, if: :status_is_approved?
+  validates :start_date, presence: true, if: :status_is_approved?
+
   validates :title, presence: true
-  # validates :documents, presence: true
+  validates :documents, presence: true
   validate :end_date_not_after_start_date
 
   enum :status, [ :pending, :approved, :denied ]
@@ -19,6 +28,8 @@ class Contract < ApplicationRecord
 
   after_save :try_schedule_activation, if: :saved_change_to_start_date?
   after_save :try_schedule_expiration, if: :saved_change_to_end_date?
+
+  attr_accessor :supplier_number, :affiliate_name
 
   aasm column: :state do
     state :unscheduled, initial: true
@@ -70,6 +81,10 @@ class Contract < ApplicationRecord
     expire if may_expire?
   end
 
+  def status_is_approved?
+    return true if status == "approved"
+    false
+  end
 
   def can_enqueue?
     return false if start_date.nil?

@@ -1,0 +1,37 @@
+<h1>Approve Contract</h1>
+
+<%= form_with model: @contract, url: approve_path(@contract), method: :patch, local: true, class: "needs-validation" do |f| %>
+  <div class="mb-3">
+    <%= f.label :start_date, class: "form-label" %>
+    <%= f.date_field :start_date, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :end_date, class: "form-label" %>
+    <%= f.date_field :end_date, class: "form-control" %>
+  </div>
+
+  <!-- add fields for supplier_number and affiliate_name-->
+  <div class="mb-3">
+    <%= f.label :supplier_number, class: "form-label" %>
+    <%= f.text_field :supplier_number, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :affiliate_name, class: "form-label" %>
+    <%= f.text_field :affiliate_name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :title, class: "form-label" %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <%= f.fields_for :documents do |doc_form| %>
+    <div class="mb-3">
+      <%= doc_form.object.file.filename if doc_form.object.file.attached? %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.submit "Approve", class: "btn btn-primary", data: { confirm: "Are you sure you want to approve this contract?" } %>
+  </div>
+<% end %>

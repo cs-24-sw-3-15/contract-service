@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_28_125614) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_184055) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -56,8 +56,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_125614) do
     t.string "state"
     t.integer "status", default: 0
     t.integer "label_id"
+    t.integer "supplier_id"
+    t.integer "affiliate_id"
+    t.index ["affiliate_id"], name: "index_contracts_on_affiliate_id"
     t.index ["created_by_id"], name: "index_contracts_on_created_by_id"
     t.index ["label_id"], name: "index_contracts_on_label_id"
+    t.index ["supplier_id"], name: "index_contracts_on_supplier_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -109,7 +113,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_125614) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contracts", "affiliates"
   add_foreign_key "contracts", "labels"
+  add_foreign_key "contracts", "suppliers"
   add_foreign_key "contracts", "users", column: "created_by_id"
   add_foreign_key "documents", "contracts"
   add_foreign_key "documents", "users", column: "created_by_id"

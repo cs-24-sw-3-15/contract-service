@@ -1,0 +1,11 @@
+<h1 class="mb-4">Pending Contracts</h1>
+
+<% @contracts.each do |contract| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h3 class="card-title"><%= contract.title %></h3>
+      <p class="card-text">Created by: <%= contract.created_by.email %></p>
+      <%= link_to "See", approve_path(contract), class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
