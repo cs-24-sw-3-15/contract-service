@@ -45,7 +45,6 @@ class ContractsController < ApplicationController
 
   def approve
     @contract = authorize Contract.find(params["id"])
-    @contract.documents.each { |doc| doc.created_by = current_user }
 
     if request.patch?
       supplier = Supplier.find_by(supplier_number: contract_params[:supplier_number])
@@ -63,13 +62,8 @@ class ContractsController < ApplicationController
 
       @contract.supplier_id = supplier.id
       @contract.affiliate_id = affiliate.id
-      @contract.supplier_number = supplier.supplier_number
-      @contract.affiliate_name = affiliate.name
-      @contract.start_date = contract_params[:start_date] if contract_params[:start_date].present?
-      @contract.end_date = contract_params[:end_date] if contract_params[:end_date].present?
-      @contract.status = :approved
 
-      if @contract.save
+      if @contract.update(contract_params.except(:documents_attributes).merge(status: :approved))
         puts "Contract approved"
         redirect_to contracts_pending_path, notice: "Contract was successfully approved."
       else
