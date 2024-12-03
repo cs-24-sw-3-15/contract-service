@@ -1,1 +1,13 @@
 <h1>Dashboard</h1>
+
+<%= pie_chart @contracts_data,
+              height: '400px',
+              colors: ['#ffc107', '#28a745', '#808080'],
+              legend: 'top',
+              empty: 'No data found',
+              title: 'Contracts'
+%>
+
+<span>
+  <%= @contracts_data %>
+</span>
