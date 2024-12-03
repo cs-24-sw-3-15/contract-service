@@ -17,7 +17,7 @@ class Label < ApplicationRecord
     message: "only allows full html hex color, such as '#F4BB44'" }
 
   def push_up_tagged_contracts
-    Contract.where(label_id: id).update_all label_id: parent.id
+    Contract.where(label_id: id).update_all label_id: parent&.id
   end
 
   def tag

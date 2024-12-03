@@ -40,7 +40,6 @@ Contract.where(title: "Basic Contract").first_or_create!(
   start_date: Date.today + 1.day,
   end_date: Date.today + 31.days,
   created_by: joe,
-  label: insurance,
   documents_attributes: [
     {
       title: "Basic PDF File",
@@ -48,13 +47,12 @@ Contract.where(title: "Basic Contract").first_or_create!(
       file: File.open(Rails.root.join("test/fixtures/files/basic_document.pdf"))
     }
   ]
-)
+).update(label: insurance)
 
 Contract.where(title: "Advanced Contract").first_or_create!(
   start_date: Date.today,
   end_date: Date.today + 365.days,
   created_by: jane,
-  label: lease,
   documents_attributes: [
     {
       title: "My Advanced PDF File",
@@ -67,4 +65,4 @@ Contract.where(title: "Advanced Contract").first_or_create!(
       file: File.open(Rails.root.join("test/fixtures/files/advanced_document_2.pdf"))
     }
   ]
-)
+).update(label: lease)
