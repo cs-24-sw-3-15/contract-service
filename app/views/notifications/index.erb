@@ -1,0 +1,7 @@
+<!-- app/views/notifications/index.html.erb -->
+<h1>Expiring Contracts</h1>
+<ul>
+  <% @expiring_contracts.each do |contract| %>
+    <li><%= contract.name %> - Expires on <%= contract.expiry_date.strftime('%Y-%m-%d') %></li>
+  <% end %>
+</ul>
