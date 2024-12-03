@@ -13,11 +13,11 @@
   <!-- add fields for supplier_id and affiliate_id -->
   <div class="mb-3">
     <%= f.label :supplier_id, class: "form-label" %>
-    <%= f.collection_select :supplier_id, Supplier.all, :id, :name, { prompt: "Select Supplier" }, class: "form-control" %>
+    <%= f.collection_select :supplier_id, @suppliers.all, :id, :name, { prompt: "Select Supplier" }, class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= f.label :affiliate_id, class: "form-label" %>
-    <%= f.collection_select :affiliate_id, Affiliate.all, :id, :name, { prompt: "Select Affiliate" }, class: "form-control" %>
+    <%= f.collection_select :affiliate_id, @affiliates.all, :id, :name, { prompt: "Select Affiliate" }, class: "form-control" %>
   </div>
 
 
