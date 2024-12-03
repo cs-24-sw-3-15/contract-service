@@ -64,7 +64,7 @@ gem "sassc-rails"
 gem "sassc", "~> 2.1", "< 2.2"
 gem "font-awesome-sass", "~> 6.5"
 gem "devise", "~> 4.9"
-
+gem "chartkick"
 gem "pundit", "~> 2.4"
 
 gem "aasm", "~> 5.5"
