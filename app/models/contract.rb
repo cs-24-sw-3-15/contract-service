@@ -8,11 +8,9 @@ class Contract < ApplicationRecord
   belongs_to :supplier, optional: true
   belongs_to :affiliate, optional: true
 
-  validates :supplier_id, presence: true, if: :status_is_approved?
-  validates :supplier_number, presence: true, if: :status_is_approved?
-  validates :affiliate_name, presence: true, if: :status_is_approved?
-  validates :affiliate_id, presence: true, if: :status_is_approved?
-  validates :start_date, presence: true, if: :status_is_approved?
+  validates :supplier_id, presence: true, if: :approved?
+  validates :affiliate_id, presence: true, if: :approved?
+  validates :start_date, presence: true, if: :approved?
 
   validates :title, presence: true
   validates :documents, presence: true
@@ -28,8 +26,6 @@ class Contract < ApplicationRecord
 
   after_save :try_schedule_activation, if: :saved_change_to_start_date?
   after_save :try_schedule_expiration, if: :saved_change_to_end_date?
-
-  attr_accessor :supplier_number, :affiliate_name
 
   aasm column: :state do
     state :unscheduled, initial: true
@@ -79,11 +75,6 @@ class Contract < ApplicationRecord
 
   def expire_if_possible
     expire if may_expire?
-  end
-
-  def status_is_approved?
-    return true if status == "approved"
-    false
   end
 
   def can_enqueue?

@@ -1,5 +1,6 @@
 class ContractsController < ApplicationController
   before_action :authenticate_user!
+  after_action :verify_policy_scoped, only: :pending
 
   def index
     # if admin? then all, otherwise only contracts made by that user.
@@ -40,29 +41,15 @@ class ContractsController < ApplicationController
 
   def pending
     @contracts = policy_scope(Contract).where(status: :pending)
-    authorize :contract, :pending?
+    # authorize :contract, :pending?
   end
 
   def approve
     @contract = authorize Contract.find(params["id"])
+    @suppliers = policy_scope(Supplier)
+    @affiliates = policy_scope(Affiliate)
 
     if request.patch?
-      supplier = Supplier.find_by(supplier_number: contract_params[:supplier_number])
-      affiliate = Affiliate.find_by(name: contract_params[:affiliate_name])
-
-      if supplier.nil?
-        @contract.errors.add(:supplier_number, "Supplier not found")
-        render :approve and return
-      end
-
-      if affiliate.nil?
-        @contract.errors.add(:affiliate_name, "Affiliate not found")
-        render :approve and return
-      end
-
-      @contract.supplier_id = supplier.id
-      @contract.affiliate_id = affiliate.id
-
       if @contract.update(contract_params.except(:documents_attributes).merge(status: :approved))
         puts "Contract approved"
         redirect_to contracts_pending_path, notice: "Contract was successfully approved."
@@ -78,8 +65,8 @@ class ContractsController < ApplicationController
   private
   def contract_params
     params.require(:contract).permit(
-      :supplier_number,
-      :affiliate_name,
+      :supplier_id,
+      :affiliate_id,
       :start_date,
       :end_date,
       :title,
