@@ -1,0 +1,20 @@
+<h1>Affiliates</h1>
+<%= link_to 'Add New Affiliate', new_affiliate_path, class: 'btn btn-primary' %>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Stake</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @affiliates.each do |affiliate| %>
+    <tr>
+      <td><%= affiliate.name %></td>
+      <td><%= affiliate.stake %></td>
+      <td></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
