@@ -3,6 +3,8 @@ FactoryBot.define do
     title { "Sample Contract" }
     association :created_by, factory: :user
 
+    documents { [ association(:document) ] }
+
     trait :approved do
       status { :approved }
     end
@@ -27,12 +29,6 @@ FactoryBot.define do
       status { :expired }
       start_date { Date.yesterday - 1.month }
       end_date { Date.yesterday }
-    end
-
-    trait :with_document do
-      after(:create) do |contract|
-        create(:document, contract: contract)
-      end
     end
   end
 end

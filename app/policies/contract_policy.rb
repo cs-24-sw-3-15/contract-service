@@ -24,6 +24,13 @@ class ContractPolicy < ApplicationPolicy
     false
   end
 
+  # for contracts/id/approve
+  def approve?
+    return true if @user.privileged?
+
+    false
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       if @user.privileged?

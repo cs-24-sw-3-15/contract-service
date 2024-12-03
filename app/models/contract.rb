@@ -5,8 +5,15 @@ class Contract < ApplicationRecord
   belongs_to :created_by, class_name: "User"
   belongs_to :label, optional: true
 
+  belongs_to :supplier, optional: true
+  belongs_to :affiliate, optional: true
+
+  validates :supplier_id, presence: true, if: :approved?
+  validates :affiliate_id, presence: true, if: :approved?
+  validates :start_date, presence: true, if: :approved?
+
   validates :title, presence: true
-  # validates :documents, presence: true
+  validates :documents, presence: true
   validate :end_date_not_after_start_date
 
   enum :status, [ :pending, :approved, :denied ]
@@ -69,7 +76,6 @@ class Contract < ApplicationRecord
   def expire_if_possible
     expire if may_expire?
   end
-
 
   def can_enqueue?
     return false if start_date.nil?

@@ -5,10 +5,10 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   def verify_pundit_authorization
-    if action_name == "index"
-      verify_policy_scoped
-    else
+    if %w[ new create show update edit destroy approve ].include?(action_name)
       verify_authorized
+    else
+      verify_policy_scoped
     end
   end
 end

@@ -1,9 +1,14 @@
 FactoryBot.define do
   factory :document do
     title { "Sample Document" }
-    association :contract
     association :created_by, factory: :user
 
-    file { Rack::Test::UploadedFile.new("test/fixtures/files/basic_document.pdf", "application/pdf") }
+    after(:build) do |document, evaluator|
+      document.file.attach(
+        io: File.open(Rails.root.join("test/fixtures/files/basic_document.pdf")),
+        filename: "basic_document.pdf",
+        content_type: "application/pdf"
+      )
+    end
   end
 end
