@@ -11,7 +11,7 @@ class LabelsController < ApplicationController
 
   def new
     @label = authorize Label.new
-    @labels = Label.order(:tag).map { [ _1.stamp, _1.id ] }
+    @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
   end
 
   def create

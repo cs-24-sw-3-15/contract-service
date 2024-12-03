@@ -5,11 +5,11 @@ real_estate:
   ancestry: "/"
   identifier: "02"
   tag: "02"
-  name: Insurance
+  title: Insurance
 
 lease:
   id: 2
   ancestry: "/1/"
   identifier: "01"
   tag: "02.01"
-  name: Lease
+  title: Lease
