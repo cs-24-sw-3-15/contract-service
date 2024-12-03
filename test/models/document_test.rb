@@ -1,11 +1,13 @@
 require "test_helper"
 
 class DocumentTest < ActiveSupport::TestCase
-  test "basic fixture document validates" do
-    basic_document = documents(:basic_document)
+  setup do
+    @document = create(:document)
+  end
 
-    assert basic_document.valid?
-    assert basic_document.file.attached?
-    assert_not_nil basic_document.file.download
+  test "basic document validates" do
+    assert @document.valid?
+    assert @document.file.attached?
+    assert_not_nil @document.file.download
   end
 end
