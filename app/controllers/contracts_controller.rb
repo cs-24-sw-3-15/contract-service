@@ -4,7 +4,7 @@ class ContractsController < ApplicationController
 
   def index
     # if admin? then all, otherwise only contracts made by that user.
-    @contracts = policy_scope(Contract.where(status: :approved))
+    @contracts = policy_scope(Contract)
   end
 
   def show
