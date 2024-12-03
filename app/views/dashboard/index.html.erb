@@ -1,9 +1,17 @@
 <h1>Overview</h1>
 
-<%= pie_chart @contracts_data,
+<%= pie_chart @contracts_status,
               height: '400px',
               colors: ['#ffc107', '#28a745', '#808080'],
               legend: 'top',
               empty: 'No data found',
               title: 'Contracts'
+%>
+
+<%= pie_chart @contracts_approved_state,
+              height: '400px',
+              colors: ['#ffc107', '#28a745', '#808080'],
+              legend: 'top',
+              empty: 'No data found',
+              title: 'Approved Contracts'
 %>
