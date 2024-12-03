@@ -3,9 +3,10 @@ class Contract < ApplicationRecord
   has_many :documents, dependent: :destroy
   accepts_nested_attributes_for :documents
   belongs_to :created_by, class_name: "User"
+  belongs_to :label, optional: true
 
   validates :title, presence: true
-  validates :documents, presence: true
+  # validates :documents, presence: true
   validate :end_date_not_after_start_date
 
   enum :status, [ :pending, :approved, :denied ]

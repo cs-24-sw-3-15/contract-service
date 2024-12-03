@@ -1,0 +1,5 @@
+class AddLabelReferenceToContracts < ActiveRecord::Migration[8.0]
+  def change
+    add_reference :contracts, :label, foreign_key: true
+  end
+end

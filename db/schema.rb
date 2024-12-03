@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_125614) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,7 +55,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
     t.integer "created_by_id", null: false
     t.string "state"
     t.integer "status", default: 0
+    t.integer "label_id"
     t.index ["created_by_id"], name: "index_contracts_on_created_by_id"
+    t.index ["label_id"], name: "index_contracts_on_label_id"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -66,6 +68,17 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
     t.integer "created_by_id", null: false
     t.index ["contract_id"], name: "index_documents_on_contract_id"
     t.index ["created_by_id"], name: "index_documents_on_created_by_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "tag", null: false
+    t.string "identifier", limit: 5, null: false
+    t.string "color", limit: 7
+    t.string "ancestry", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ancestry"], name: "index_labels_on_ancestry"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -96,6 +109,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_133052) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "contracts", "labels"
   add_foreign_key "contracts", "users", column: "created_by_id"
   add_foreign_key "documents", "contracts"
   add_foreign_key "documents", "users", column: "created_by_id"

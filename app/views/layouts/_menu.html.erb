@@ -50,6 +50,16 @@
       <% end %>
     </li>
 
+    <li class="nav-item">
+      <%= link_to labels_path,
+                  class: "nav-link #{'active bg-primary text-white' if request.path == '/labels'} rounded d-flex align-items-center mb-2 text-dark",
+                  id: 'labels-link',
+                  data: { toggle: 'tooltip', placement: 'top' } do %>
+        <i class="fa-solid fa-tags" style="width: 20px; text-align: center;"></i>
+        <span class="ms-2">Labels</span>
+      <% end %>
+    </li>
+
     <!-- Suppliers -->
     <li class="nav-item">
       <%= link_to suppliers_path,

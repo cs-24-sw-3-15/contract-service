@@ -11,5 +11,6 @@
     contract_path(@contract),
     method: :delete,
     class: "btn btn-danger",
-    disabled: !policy(@contract).destroy? %>
+    disabled: !policy(@contract).destroy?,
+    form: { data: { turbo_confirm: "Are you sure?" } } %>
 </div>

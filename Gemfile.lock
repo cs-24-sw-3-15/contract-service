@@ -85,6 +85,8 @@ GEM
     after_commit_everywhere (1.4.0)
       activerecord (>= 4.2)
       activesupport
+    ancestry (4.3.3)
+      activerecord (>= 5.2.6)
     ast (2.4.2)
     autoprefixer-rails (10.4.19.0)
       execjs (~> 2)
@@ -127,6 +129,11 @@ GEM
     drb (2.2.1)
     erubi (1.13.0)
     execjs (2.10.0)
+    factory_bot (6.5.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.4)
+      factory_bot (~> 6.5)
+      railties (>= 5.0.0)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-aarch64-linux-musl)
     ffi (1.17.0-arm-linux-gnu)
@@ -376,6 +383,7 @@ DEPENDENCIES
   aasm (~> 5.5)
   active_storage_validations
   after_commit_everywhere (~> 1.4)
+  ancestry (~> 4.3)
   bootsnap
   bootstrap
   brakeman
@@ -383,6 +391,7 @@ DEPENDENCIES
   chartkick
   debug
   devise (~> 4.9)
+  factory_bot_rails (~> 6.4)
   font-awesome-sass (~> 6.5)
   image_processing (~> 1.2)
   importmap-rails

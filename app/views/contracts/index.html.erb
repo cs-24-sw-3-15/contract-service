@@ -11,16 +11,23 @@
           mail_to contract.created_by.email, subject: "Regarding contract '#{contract.title}'"
         %>&gt;</small>
       <% end %>
+      <%= if contract.label
+            # TODO: Light colors need black text. Needs helper for https://www.w3.org/TR/WCAG20/#contrast-ratiodef
+            link_to content_tag(:span, contract.label.stamp,
+              class: "badge",
+              style: "background-color: #{contract.label.color}"
+            ), "#"
+          end %>
       <ul>
         <% contract.documents.each do |document| %>
           <li>
-            <%= link_to rails_blob_path(document.file, disposition: "attachment") do %>
+            <%= link_to url_for(document.file) do %>
               <%= document.title %>
               <br>
               <% if document.file.representable? %>
                 <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
               <% else %>
-                Download
+                View
               <% end %>
             <% end %>
           </li>

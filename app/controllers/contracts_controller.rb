@@ -13,6 +13,7 @@ class ContractsController < ApplicationController
   def new
     # HACK: Hardcoding one empty "document" to allow view to function.
     @contract = authorize Contract.new(documents_attributes: [ {} ])
+    @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
   end
 
   def create
@@ -26,6 +27,7 @@ class ContractsController < ApplicationController
     if @contract.save
       redirect_to contracts_path, notice: "Contract successfully created."
     else
+      @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
       render :new
     end
   end
@@ -40,6 +42,7 @@ class ContractsController < ApplicationController
   def contract_params
     params.require(:contract).permit(
       :title,
+      :label_id,
       documents_attributes: [ [ :title, :file ] ]
     )
   end
