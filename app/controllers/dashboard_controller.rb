@@ -11,8 +11,8 @@ class DashboardController < ApplicationController
     today = Date.today
     four_weeks_ahead = today + 4.weeks
 
-    @soon_active_contracts = policy_scope(Contract).where(start_date: today..four_weeks_ahead)
-    @soon_expiring_contracts = policy_scope(Contract).where(end_date: today..four_weeks_ahead)
+    @soon_active_contracts = policy_scope(Contract).where(start_date: today..four_weeks_ahead).order(:start_date)
+    @soon_expiring_contracts = policy_scope(Contract).where(end_date: today..four_weeks_ahead).order(:end_date)
 
   end
 end

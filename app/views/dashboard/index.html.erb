@@ -1,5 +1,4 @@
 
-<head>
   <script>
       function filterContracts() {
           const input = document.getElementById('searchContracts').value.toLowerCase();
@@ -27,10 +26,10 @@
           }
       }
   </script>
-</head>
+
+<h1>Overview</h1>
 
 <div class="container mt-4">
-  <h3>Contract Timeline</h3>
 
   <style>
       .timeline {
@@ -100,8 +99,6 @@
       }
   </style>
 
-  <h1>Overview</h1>
-
   <%= pie_chart @contracts_status,
                 height: '400px',
                 colors: ['#ffc107', '#28a745', '#808080'],
@@ -117,6 +114,8 @@
                 empty: 'No data found',
                 title: 'Approved Contracts'
   %>
+
+  <h3>Contract Timeline</h3>
 
   <div class="mb-3">
     <input type="text" id="searchContracts" class="form-control" placeholder="Search contracts..." oninput="filterContracts()">
