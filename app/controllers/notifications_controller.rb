@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
   def index
-    @expiring_contracts = Contract.where('expiry_date >= ?', time.zone.now + 7.days)
+    @expiring_contracts = policy_scope(Contract).where("end_date <= ?", Time.zone.now + 31.days)
   end
 end

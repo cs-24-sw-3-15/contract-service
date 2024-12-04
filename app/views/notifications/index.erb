@@ -2,6 +2,6 @@
 <h1>Expiring Contracts</h1>
 <ul>
   <% @expiring_contracts.each do |contract| %>
-    <li><%= contract.name %> - Expires on <%= contract.expiry_date.strftime('%Y-%m-%d') %></li>
+    <li><%= contract.title %> - Expires on <%= contract.end_date.strftime('%Y-%m-%d') %></li>
   <% end %>
 </ul>
