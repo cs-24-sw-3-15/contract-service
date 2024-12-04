@@ -12,11 +12,10 @@
   <tbody>
   <% @labels.each do |label| %>
     <tr>
-      <td><%= label.title %></td>
       <td><%= label.tag %></td>
+      <td><%= label.title %></td>
       <td><span class="badge rounded-pill", style="background-color: <%= label.color %>"><%= label.color %></span></td>
       <td>
-        <%= link_to "View", label_path(label), class: "btn btn-secondary" %>
         <%= button_to "Destroy",
           label_path(label),
           method: :delete,
