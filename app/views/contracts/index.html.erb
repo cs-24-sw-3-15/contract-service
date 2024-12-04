@@ -1,5 +1,15 @@
 <h1>Contracts</h1>
 
+<%= form_with url: contracts_path, method: :get, class: "d-flex mb-3 position-relative", role: "search", data: { controller: "autocomplete", autocomplete_keywords_value: @query_keywords.to_json } do |form| %>
+  <%= form.text_field :query, value: @query, placeholder: "Search...",
+                       class: "form-control me-2", aria: { label: "Search" },
+                       autocomplete: "off",
+                       data: { autocomplete_target: "input", action: "input->autocomplete#filter keydown->autocomplete#navigate" } %>
+  <div class="autocomplete-list position-absolute bg-white border shadow-sm top-100 w-100 d-none"
+       data-autocomplete-target="suggestions"></div>
+  <%= form.submit "Search", class: "btn btn-primary" %>
+<% end %>
+
 <p><%= link_to "Submit New Contract", new_contract_path, class: "btn btn-primary" %></p>
 
 <% @contracts.each do |contract| %>
