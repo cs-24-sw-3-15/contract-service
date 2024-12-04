@@ -74,3 +74,5 @@ gem "after_commit_everywhere", "~> 1.4"
 gem "ancestry", "~> 4.3"
 
 gem "color", "~> 1.8"
+
+gem "search_cop", "~> 1.4"

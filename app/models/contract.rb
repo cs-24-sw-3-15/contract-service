@@ -1,5 +1,7 @@
 class Contract < ApplicationRecord
   include AASM
+  include SearchCop
+
   has_many :documents, dependent: :destroy
   accepts_nested_attributes_for :documents
   belongs_to :created_by, class_name: "User"
@@ -44,6 +46,29 @@ class Contract < ApplicationRecord
     event :expire do
       transitions from: :active, to: :expired, guards: :can_expire?
     end
+  end
+
+  search_scope :search do
+    attributes :title, :status, :state, :start_date, :end_date
+    attributes document: "documents.title"
+
+    attributes all: [ "title", "documents.title" ]
+    options :all, default: true
+  end
+
+  search_scope :advanced_search do
+    attributes :title, :status, :state, :start_date, :end_date
+    attributes document: "documents.title"
+    attributes created_by: [ "created_by.name", "created_by.email" ]
+    attributes supplier: "supplier.name"
+    attributes supplier_number: "supplier.supplier_number"
+    attributes affiliate: "affiliate.name"
+    attributes tag: "label.tag"
+    attributes label: "label.title"
+
+    attributes all: [ "title", "documents.title" ]
+    options :all, default: true
+    options :tag, left_wildcard: false
   end
 
   private

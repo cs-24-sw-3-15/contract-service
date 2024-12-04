@@ -4,7 +4,21 @@ class ContractsController < ApplicationController
   after_action :verify_authorized, only: :approve
 
   def index
-    @contracts = policy_scope(Contract)
+    @query = params[:query]
+    @query_keywords =
+      if current_user.privileged?
+        Contract.search_reflection(:advanced_search).attributes.keys - [ "all" ]
+      else
+        Contract.search_reflection(:search).attributes.keys - [ "all" ]
+      end
+    @contracts =
+      if current_user.privileged?
+        # HACK: Deal with how tags are stored internally in the database.
+        query = @query&.gsub(/tag:(?!\^)/, "tag:^")
+        policy_scope(Contract).advanced_search(query)
+      else
+        policy_scope(Contract).search(@query)
+      end
   end
 
   def show
