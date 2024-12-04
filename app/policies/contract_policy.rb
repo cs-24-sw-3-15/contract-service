@@ -7,7 +7,7 @@ class ContractPolicy < ApplicationPolicy
   end
 
   def new?
-    create?
+    true
   end
 
   def create?
@@ -19,7 +19,6 @@ class ContractPolicy < ApplicationPolicy
 
   def destroy?
     return true if @user.privileged?
-    return true if @record.created_by == @user
 
     false
   end
