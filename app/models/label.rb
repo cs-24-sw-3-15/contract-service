@@ -28,6 +28,7 @@ class Label < ApplicationRecord
     return if color == :color_manual
 
     if parent
+      # TODO: Get parent color "last saved" if the parent's just got it changed.
       derived_color = Color::RGB.from_html(parent.color).darken_by(80).html
       if color.blank? || color == "#000000" || color == derived_color || color_managed == :color_managed
         self.color_managed = :color_managed

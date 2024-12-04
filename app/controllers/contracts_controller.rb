@@ -1,9 +1,9 @@
 class ContractsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_policy_scoped, only: :pending
+  after_action :verify_authorized, only: :approve
 
   def index
-    # if admin? then all, otherwise only contracts made by that user.
     @contracts = policy_scope(Contract)
   end
 
@@ -40,6 +40,7 @@ class ContractsController < ApplicationController
   end
 
   def pending
+    authorize Contract
     @contracts = policy_scope(Contract).where(status: :pending)
   end
 
@@ -50,11 +51,9 @@ class ContractsController < ApplicationController
     @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
 
     if request.patch?
-      if @contract.update(contract_params.merge(status: :approved))
-        puts "Contract approved"
+      if @contract.update(contract_privileged_params.merge(status: :approved))
         redirect_to contracts_pending_path, notice: "Contract was successfully approved."
       else
-        puts @contract.errors.full_messages
         render :approve, status: 422
       end
     else
@@ -63,7 +62,15 @@ class ContractsController < ApplicationController
   end
 
   private
+
   def contract_params
+    params.require(:contract).permit(
+      :title,
+      documents_attributes: [ [ :title, :file ] ]
+    )
+  end
+
+  def contract_privileged_params
     params.require(:contract).permit(
       :supplier_id,
       :affiliate_id,

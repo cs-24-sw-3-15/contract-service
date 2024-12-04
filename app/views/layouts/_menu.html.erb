@@ -34,71 +34,83 @@
       <% end %>
     </li>
 
-    <!-- Legal Advisor -->
-    <li class="nav-item">
-      <h6 class="text-muted mt-4 mb-2 px-2">Legal</h6>
-    </li>
-
-    <!-- Pending Contracts -->
-    <li class="nav-item">
-      <%= link_to contracts_pending_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts/pending'} rounded d-flex align-items-center mb-2 text-dark",
-                  id: 'pending-contracts-link',
-                  data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="fa-solid fa-file-circle-question" style="width: 20px; text-align: center;"></i>
-        <span class="ms-2">Pending Contracts</span>
+    <% if current_user %>
+      <!-- Legal Advisor -->
+      <% if policy(Contract).pending? || policy(Label).index? || policy(Supplier).index? || policy(Affiliate).index? %>
+        <li class="nav-item">
+          <h6 class="text-muted mt-4 mb-2 px-2">Legal</h6>
+        </li>
       <% end %>
-    </li>
 
-    <li class="nav-item">
-      <%= link_to labels_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/labels'} rounded d-flex align-items-center mb-2 text-dark",
-                  id: 'labels-link',
-                  data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="fa-solid fa-tags" style="width: 20px; text-align: center;"></i>
-        <span class="ms-2">Labels</span>
+      <!-- Pending Contracts -->
+      <% if policy(Contract).pending? %>
+        <li class="nav-item">
+          <%= link_to contracts_pending_path,
+                      class: "nav-link #{'active bg-primary text-white' if request.path == '/contracts/pending'} rounded d-flex align-items-center mb-2 text-dark",
+                      id: 'pending-contracts-link',
+                      data: { toggle: 'tooltip', placement: 'top' } do %>
+            <i class="fa-solid fa-file-circle-question" style="width: 20px; text-align: center;"></i>
+            <span class="ms-2">Pending Contracts</span>
+          <% end %>
+        </li>
       <% end %>
-    </li>
 
-    <!-- Suppliers -->
-    <li class="nav-item">
-      <%= link_to suppliers_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/suppliers'} rounded d-flex align-items-center mb-2 text-dark",
-                  id: 'suppliers-link',
-                  data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="fa-solid fa-industry" style="width: 20px; text-align: center;"></i>
-        <span class="ms-2">Suppliers</span>
+      <% if policy(Label).index? %>
+        <li class="nav-item">
+          <%= link_to labels_path,
+                      class: "nav-link #{'active bg-primary text-white' if request.path == '/labels'} rounded d-flex align-items-center mb-2 text-dark",
+                      id: 'labels-link',
+                      data: { toggle: 'tooltip', placement: 'top' } do %>
+            <i class="fa-solid fa-tags" style="width: 20px; text-align: center;"></i>
+            <span class="ms-2">Labels</span>
+          <% end %>
+        </li>
       <% end %>
-    </li>
 
-    <!-- Affiliates -->
-    <li class="nav-item">
-      <%= link_to affiliates_path,
-                  class: "nav-link #{'active bg-primary text-white' if request.path == '/affiliates'} rounded d-flex align-items-center mb-2 text-dark",
-                  id: 'affiliates-link',
-                  data: { toggle: 'tooltip', placement: 'top' } do %>
-        <i class="fa-solid fa-building" style="width: 20px; text-align: center;"></i>
-        <span class="ms-2">Affiliates</span>
+      <!-- Suppliers -->
+      <% if policy(Supplier).index? %>
+        <li class="nav-item">
+          <%= link_to suppliers_path,
+                      class: "nav-link #{'active bg-primary text-white' if request.path == '/suppliers'} rounded d-flex align-items-center mb-2 text-dark",
+                      id: 'suppliers-link',
+                      data: { toggle: 'tooltip', placement: 'top' } do %>
+            <i class="fa-solid fa-industry" style="width: 20px; text-align: center;"></i>
+            <span class="ms-2">Suppliers</span>
+          <% end %>
+        </li>
       <% end %>
-    </li>
 
-    <% if current_user&.admin? %>
-      <!-- Admin Section Header -->
-      <li class="nav-item">
-        <h6 class="text-muted mt-4 mb-2 px-2">Admin Options</h6>
-      </li>
+      <!-- Affiliates -->
+      <% if policy(Affiliate).index? %>
+        <li class="nav-item">
+          <%= link_to affiliates_path,
+                      class: "nav-link #{'active bg-primary text-white' if request.path == '/affiliates'} rounded d-flex align-items-center mb-2 text-dark",
+                      id: 'affiliates-link',
+                      data: { toggle: 'tooltip', placement: 'top' } do %>
+            <i class="fa-solid fa-building" style="width: 20px; text-align: center;"></i>
+            <span class="ms-2">Affiliates</span>
+          <% end %>
+        </li>
+      <% end %>
 
-      <!-- Users -->
-      <li class="nav-item">
-        <%= link_to users_path,
-                    class: "nav-link #{'active bg-primary text-white' if request.path == '/users'} rounded d-flex align-items-center mb-2 text-dark",
-                    id: 'users-link',
-                    data: { toggle: 'tooltip', placement: 'top' } do %>
-          <i class="fa-solid fa-users" style="width: 20px; text-align: center;"></i>
-          <span class="ms-2">Users</span>
-        <% end %>
-      </li>
-    </ul>
+      <% if current_user.privileged? %>
+        <!-- Admin Section Header -->
+        <li class="nav-item">
+          <h6 class="text-muted mt-4 mb-2 px-2">Admin Options</h6>
+        </li>
+
+        <!-- Users -->
+        <li class="nav-item">
+          <%= link_to users_path,
+                      class: "nav-link #{'active bg-primary text-white' if request.path == '/users'} rounded d-flex align-items-center mb-2 text-dark",
+                      id: 'users-link',
+                      data: { toggle: 'tooltip', placement: 'top' } do %>
+            <i class="fa-solid fa-users" style="width: 20px; text-align: center;"></i>
+            <span class="ms-2">Users</span>
+          <% end %>
+        </li>
+    <% end %>
+  </ul>
   <% end %>
 
   <!-- Profile Section -->
