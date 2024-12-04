@@ -13,8 +13,6 @@ class Reminder < ApplicationRecord
   end
 
   def remind_at_within_contract_dates
-    return if contract.blank? || remind_at.blank?
-
     if remind_at < contract.start_date || remind_at > contract.end_date
       errors.add(:remind_at, "must be within the contract's start and end dates")
     end
