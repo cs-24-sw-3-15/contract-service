@@ -1,17 +1,176 @@
-<h1>Overview</h1>
 
-<%= pie_chart @contracts_status,
-              height: '400px',
-              colors: ['#ffc107', '#28a745', '#808080'],
-              legend: 'top',
-              empty: 'No data found',
-              title: 'Contracts'
-%>
+<head>
+  <script>
+      function filterContracts() {
+          const input = document.getElementById('searchContracts').value.toLowerCase();
+          const items = document.querySelectorAll('.timeline-item');
+          let anyVisible = false;
+          items.forEach(item => {
+              const title = item.querySelector('strong').innerText.toLowerCase();
+              const isVisible = title.includes(input);
+              item.style.display = isVisible ? 'block' : 'none';
+              if (isVisible) anyVisible = true;
+          });
+          const noResultsMessage = document.getElementById('noResultsMessage');
+          noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+      }
 
-<%= pie_chart @contracts_approved_state,
-              height: '400px',
-              colors: ['#ffc107', '#28a745', '#808080'],
-              legend: 'top',
-              empty: 'No data found',
-              title: 'Approved Contracts'
-%>
+      function toggleSection(sectionId, arrowId) {
+          const section = document.getElementById(sectionId);
+          const arrow = document.getElementById(arrowId);
+          if (section.style.display === 'none' || section.style.display === '') {
+              section.style.display = 'block';
+              arrow.innerHTML = '&#9660;';
+          } else {
+              section.style.display = 'none';
+              arrow.innerHTML = '&#9654;';
+          }
+      }
+  </script>
+</head>
+
+<div class="container mt-4">
+  <h3>Contract Timeline</h3>
+
+  <style>
+      .timeline {
+          position: relative;
+          padding: 10px 0;
+          margin-top: 10px;
+          border-left: 2px solid #ddd;
+      }
+
+      .timeline-item {
+          position: relative;
+          margin-bottom: 10px;
+          font-size: 0.9rem;
+      }
+
+      .timeline-icon {
+          position: absolute;
+          left: -12px;
+          top: 5px;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: #ddd;
+          z-index: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.8rem;
+      }
+
+      .timeline-content {
+          margin-left: 30px;
+          padding: 5px 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          background-color: #f9f9f9;
+      }
+
+      .timeline-icon.bg-success {
+          background-color: #28a745;
+          color: #fff;
+      }
+
+      .timeline-icon.bg-danger {
+          background-color: #dc3545;
+          color: #fff;
+      }
+
+      #noResultsMessage {
+          display: none;
+          color: #888;
+          text-align: center;
+          margin-top: 20px;
+      }
+
+      .toggle-header {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          font-weight: bold;
+          margin-bottom: 10px;
+      }
+
+      .toggle-arrow {
+          font-size: 1rem;
+          margin-right: 5px;
+      }
+  </style>
+
+  <h1>Overview</h1>
+
+  <%= pie_chart @contracts_status,
+                height: '400px',
+                colors: ['#ffc107', '#28a745', '#808080'],
+                legend: 'top',
+                empty: 'No data found',
+                title: 'Contracts'
+  %>
+
+  <%= pie_chart @contracts_approved_state,
+                height: '400px',
+                colors: ['#ffc107', '#28a745', '#808080'],
+                legend: 'top',
+                empty: 'No data found',
+                title: 'Approved Contracts'
+  %>
+
+  <div class="mb-3">
+    <input type="text" id="searchContracts" class="form-control" placeholder="Search contracts..." oninput="filterContracts()">
+  </div>
+
+  <div id="noResultsMessage">No contracts found matching your search.</div>
+
+  <div class="timeline">
+
+    <div class="toggle-header" onclick="toggleSection('activeContractsSection', 'activeContractsArrow')">
+      <span id="activeContractsArrow" class="toggle-arrow">&#9660;</span> Soon Active Contracts
+    </div>
+    <div id="activeContractsSection">
+      <% if @soon_active_contracts.any? %>
+        <% @soon_active_contracts.each do |contract| %>
+          <div class="timeline-item">
+            <div class="timeline-icon bg-success">
+              <i class="bi bi-check-circle"></i>
+            </div>
+            <div class="timeline-content">
+              <strong><%= contract.title %></strong><br>
+              Starts: <%= contract.start_date.strftime('%b %d, %Y') %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="timeline-item">
+          <div class="timeline-content">No soon active contracts available.</div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="toggle-header" onclick="toggleSection('expiringContractsSection', 'expiringContractsArrow')">
+      <span id="expiringContractsArrow" class="toggle-arrow">&#9660;</span> Soon Expiring Contracts
+    </div>
+    <div id="expiringContractsSection">
+      <% if @soon_expiring_contracts.any? %>
+        <% @soon_expiring_contracts.each do |contract| %>
+          <div class="timeline-item">
+            <div class="timeline-icon bg-danger">
+              <i class="bi bi-exclamation-circle"></i>
+            </div>
+            <div class="timeline-content">
+              <strong><%= contract.title %></strong><br>
+              Expires: <%= contract.end_date.strftime('%b %d, %Y') %>
+              (<%= distance_of_time_in_words(Date.today, contract.end_date) %>)
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="timeline-item">
+          <div class="timeline-content">No soon expiring contracts available.</div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
