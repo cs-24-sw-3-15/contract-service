@@ -23,6 +23,12 @@ class ContractPolicy < ApplicationPolicy
     false
   end
 
+  def pending?
+    return true if @user.privileged?
+
+    false
+  end
+
   # for contracts/id/approve
   def approve?
     return true if @user.privileged?
