@@ -65,7 +65,6 @@ class ContractsController < ApplicationController
   private
   def contract_params
     params.require(:contract).permit(
-      :label_id,
       :supplier_id,
       :affiliate_id,
       :start_date,
