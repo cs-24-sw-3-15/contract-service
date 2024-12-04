@@ -50,7 +50,25 @@ Initializes and migrates the database (sqlite) to the latest revision
 available in the project.
 
 ```bash
+bin/rails db:create
 bin/rails db:migrate
+```
+
+## Database initialization
+
+For testing, there is some example data already generated for you in
+`db/seeds.db`. To use it write the following.
+```bash
+bin/rails db:seed
+```
+
+Further, there is a huge amount of premade labels inside `credentials.yml.enc`,
+which you can access if you have configured `config/master.key`. Ask frequent
+contributors for this file if you need these premade labels. These labels may
+also be used in production.
+
+```bash
+bin/rails db:custom_seed
 ```
 
 ## Run Puma Development Server
@@ -59,14 +77,14 @@ bin/rails db:migrate
 bin/rails server
 ```
 
-## Things Left to do
+## Deployment to Production Environment
 
-* Database initialization
+See [PRODUCTION.md](./PRODUCTION.md)
+
+## Things Left to do
 
 * How to run the test suite
 
 * Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
 
 * ...
