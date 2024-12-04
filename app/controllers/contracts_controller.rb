@@ -41,21 +41,21 @@ class ContractsController < ApplicationController
 
   def pending
     @contracts = policy_scope(Contract).where(status: :pending)
-    # authorize :contract, :pending?
   end
 
   def approve
     @contract = authorize Contract.find(params["id"])
     @suppliers = policy_scope(Supplier)
     @affiliates = policy_scope(Affiliate)
+    @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
 
     if request.patch?
-      if @contract.update(contract_params.except(:documents_attributes).merge(status: :approved))
+      if @contract.update(contract_params.merge(status: :approved))
         puts "Contract approved"
         redirect_to contracts_pending_path, notice: "Contract was successfully approved."
       else
         puts @contract.errors.full_messages
-        render :approve
+        render :approve, status: 422
       end
     else
       render :approve
