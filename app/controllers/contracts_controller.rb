@@ -12,7 +12,6 @@ class ContractsController < ApplicationController
   end
 
   def new
-    # HACK: Hardcoding one empty "document" to allow view to function.
     @contract = authorize Contract.new(documents_attributes: [ {} ])
     @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
   end
@@ -21,7 +20,10 @@ class ContractsController < ApplicationController
     @contract = Contract.new(contract_params)
 
     @contract.created_by = current_user
-    @contract.documents.each { |doc| doc.created_by = current_user }
+    @contract.documents.each do |document|
+      document.created_by = current_user
+      document.title ||= File.basename(document.file.filename.to_s, ".*").titleize
+    end
 
     authorize @contract
 
@@ -29,7 +31,7 @@ class ContractsController < ApplicationController
       redirect_to contracts_path, notice: "Contract successfully submitted."
     else
       @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
-      render :new
+      render :new, status: 422
     end
   end
 
@@ -66,7 +68,7 @@ class ContractsController < ApplicationController
   def contract_params
     params.require(:contract).permit(
       :title,
-      documents_attributes: [ [ :title, :file ] ]
+      documents_attributes: [ [ :file ] ]
     )
   end
 
@@ -78,7 +80,7 @@ class ContractsController < ApplicationController
       :end_date,
       :title,
       :label_id,
-      documents_attributes: [ [ :title, :file ] ]
+      documents_attributes: [ [ :file ] ]
     )
   end
 end

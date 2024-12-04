@@ -18,19 +18,18 @@
     <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <!-- TODO: Dynamically add multiple documents. -->
-  <%= form.fields_for :documents do |form| %>
-    <div class="mb-3">
-      <%= form.label :title, "Document Title", class: "form-label" %>
-      <%= form.text_field :title, class: "form-control" %>
-    </div>
-    <div class="mb-3">
-      <%= form.label :title, "Document", class: "form-label" %>
-      <%= form.file_field :file, class: "form-control" %>
-    </div>
-  <% end %>
+  <div class="mb-3" data-controller="documents" data-documents-target="attachments">
+    <label class="form-label">Documents</label>
+    <%= form.fields_for :documents do |form| %>
+      <%= form.file_field :file, class: "mb-1 form-control document-field", data: { action: "documents#ensureEmptyField" } %>
+    <% end %>
+  </div>
 
   <div class="mb-3">
     <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
+
+<template id="document-template">
+  <input class="mb-1 form-control document-field" data-action="documents#ensureEmptyField" type="file">
+</template>
