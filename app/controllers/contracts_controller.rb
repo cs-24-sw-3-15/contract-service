@@ -14,7 +14,6 @@ class ContractsController < ApplicationController
   def new
     # HACK: Hardcoding one empty "document" to allow view to function.
     @contract = authorize Contract.new(documents_attributes: [ {} ])
-    @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
   end
 
   def create
@@ -48,6 +47,7 @@ class ContractsController < ApplicationController
     @contract = authorize Contract.find(params["id"])
     @suppliers = policy_scope(Supplier)
     @affiliates = policy_scope(Affiliate)
+    @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
 
     if request.patch?
       if @contract.update(contract_params.except(:documents_attributes).merge(status: :approved))
@@ -65,6 +65,7 @@ class ContractsController < ApplicationController
   private
   def contract_params
     params.require(:contract).permit(
+      :label_id,
       :supplier_id,
       :affiliate_id,
       :start_date,

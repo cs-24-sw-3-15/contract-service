@@ -10,6 +10,11 @@
     <%= f.date_field :end_date, class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :label %>
+    <%= f.select :label_id, @labels, { include_blank: 'None' }, class: 'form-select' %>
+  </div>
+
   <!-- add fields for supplier_id and affiliate_id -->
   <div class="mb-3">
     <%= f.label :supplier_id, class: "form-label" %>
@@ -26,13 +31,26 @@
     <%= f.text_field :title, class: "form-control" %>
   </div>
 
-  <%= f.fields_for :documents do |doc_form| %>
-    <div class="mb-3">
-      <p>Document title: <%= doc_form.object.title %></p>
-    </div>
-  <% end %>
+  <div class="mb-3">
+    <%= f.label :documents, class: "form-label" %>
+    <ul>
+      <%= f.fields_for :documents do |document| %>
+        <li>
+          <%= link_to url_for(document.object.file) do %>
+            <%= document.object.title %>
+            <br>
+            <% if document.object.file.representable? %>
+              <%= image_tag url_for(document.object.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
+            <% else %>
+              View
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
   <div class="mb-3">
-    <%= f.submit "Approve", class: "btn btn-primary", data: { confirm: "Are you sure you want to approve this contract?" } %>
+    <%= f.submit "Approve", class: "btn btn-primary", data: { turbo_confirm: "Are you sure you want to approve this contract?" } %>
   </div>
 <% end %>
