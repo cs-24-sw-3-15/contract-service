@@ -5,7 +5,7 @@
                        class: "form-control me-2", aria: { label: "Search" },
                        autocomplete: "off",
                        data: { autocomplete_target: "input", action: "input->autocomplete#filter keydown->autocomplete#navigate" } %>
-  <div class="autocomplete-list position-absolute bg-white border shadow-sm top-100 w-100 d-none"
+  <div class="autocomplete-list position-absolute bg-white border shadow-sm top-100 w-100 d-none z-3"
        data-autocomplete-target="suggestions"></div>
   <%= form.submit "Search", class: "btn btn-primary" %>
 <% end %>
@@ -21,27 +21,30 @@
       %>&gt;</small>
     <% end %>
     <%= if contract.label
-          # TODO: Light colors need black text. Needs helper for https://www.w3.org/TR/WCAG20/#contrast-ratiodef
           link_to content_tag(:span, contract.label.stamp,
             class: "badge",
             style: "background-color: #{contract.label.color}"
-          ), "#"
+          ), contracts_path(query: @query.to_s.sub(/tag:\S+|\Z/, " tag:#{contract.label.tag}").strip)
         end %>
-    <ul>
+    <%= if contract.status
+          link_to content_tag(:span, contract.status.humanize,
+            class: "badge",
+            style: "background-color: #3f3f3f"
+          ), contracts_path(query: @query.to_s.sub(/status:\S+|\Z/, " status:#{contract.status_before_type_cast}").strip)
+        end %>
+    <%= if contract.state
+          link_to content_tag(:span, contract.state.humanize,
+            class: "badge",
+            style: "background-color: #3f3f3f"
+          ), contracts_path(query: @query.to_s.sub(/state:\S+|\Z/, " state:#{contract.state_before_type_cast}").strip)
+        end %>
+    <div class="row mt-3">
       <% contract.documents.each do |document| %>
-        <li>
-          <%= link_to url_for(document.file) do %>
-            <%= document.title %>
-            <br>
-            <% if document.file.representable? %>
-              <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
-            <% else %>
-              View
-            <% end %>
-          <% end %>
-        </li>
+        <div class="col-md-2 mb-3">
+          <%= render partial: "document", locals: {document: document} %>
+        </div>
       <% end %>
-    </ul>
+    </div>
     <%= link_to "View", contract_path(contract), class: "btn btn-secondary" %>
   </div>
 <% end %>

@@ -33,22 +33,13 @@
 
   <div class="mb-3">
     <%= f.label :documents, class: "form-label" %>
-    <ul>
+    <div class="row mt-3">
       <% @contract.documents.each do |document| %>
-        <li>
-          <%= link_to url_for(document.file) do %>
-            <%= document.title %>
-            <br>
-            <% if document.file.representable? %>
-              <%= image_tag url_for(document.file.preview(resize_to_limit: [320, 240]).processed), class: "img-thumbnail mt-2" %>
-            <% else %>
-              View
-            <% end %>
-          <% end %>
-        </li>
+        <div class="col-md-2 mb-3">
+          <%= render partial: "document", locals: {document: document} %>
+        </div>
       <% end %>
-    </ul>
-    <ul>
+    </div>
   </div>
 
   <div class="mb-3">
