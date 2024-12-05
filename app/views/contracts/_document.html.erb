@@ -1,0 +1,10 @@
+<%= link_to url_for(document.file), class: "text-decoration-none" do %>
+  <div class="card">
+    <% if document.file.representable? %>
+      <%= image_tag url_for(document.file.preview(resize_to_limit: [640, 480]).processed), class: "card-img-top" %>
+    <% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= document.title %></h5>
+    </div>
+  </div>
+<% end %>
