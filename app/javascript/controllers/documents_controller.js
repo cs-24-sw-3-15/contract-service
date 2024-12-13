@@ -28,11 +28,5 @@ export default class extends Controller {
 
     this.attachmentsTarget.appendChild(clone);
   }
-
-  handleFileChange(event) {
-    if (event.target.value) {
-      this.ensureEmptyField();
-    }
-  }
 }
 
