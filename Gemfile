@@ -76,3 +76,5 @@ gem "ancestry", "~> 4.3"
 gem "color", "~> 1.8"
 
 gem "search_cop", "~> 1.4"
+
+gem "timecop", "~> 0.9.10"
