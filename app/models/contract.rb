@@ -3,6 +3,7 @@ class Contract < ApplicationRecord
   include SearchCop
 
   has_many :documents, dependent: :destroy
+  has_many :reminders, dependent: :destroy
   accepts_nested_attributes_for :documents
   belongs_to :created_by, class_name: "User"
   belongs_to :label, optional: true
