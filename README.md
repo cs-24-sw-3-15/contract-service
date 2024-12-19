@@ -14,9 +14,11 @@ Ruby 3.3
 First install `rbenv`:
 ```bash
 # MacOS
-brew install rbenv
+brew install rbenv mupdf nodejs
 # Ubuntu Linux
-sudo apt install rbenv libyaml-dev libvips-dev mupdf
+sudo apt install rbenv libyaml-dev libvips-dev mupdf nodejs
+# Arch Linux
+sudo yay -S rbenv base-devel libyaml libvips mupdf tesseract-data-eng nodejs
 ```
 
 Then install `rbenv`:
