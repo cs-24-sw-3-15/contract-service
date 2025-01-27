@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_03_123500) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_04_112903) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -82,7 +82,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_123500) do
     t.string "ancestry", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "color_managed"
     t.index ["ancestry"], name: "index_labels_on_ancestry"
+  end
+
+  create_table "reminders", force: :cascade do |t|
+    t.integer "contract_id", null: false
+    t.datetime "remind_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contract_id"], name: "index_reminders_on_contract_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -119,4 +128,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_123500) do
   add_foreign_key "contracts", "users", column: "created_by_id"
   add_foreign_key "documents", "contracts"
   add_foreign_key "documents", "users", column: "created_by_id"
+  add_foreign_key "reminders", "contracts"
 end

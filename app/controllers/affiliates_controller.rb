@@ -2,6 +2,7 @@ class AffiliatesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    authorize Affiliate
     @affiliates = policy_scope(Affiliate)
   end
 

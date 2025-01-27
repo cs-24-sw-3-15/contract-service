@@ -18,28 +18,22 @@ jane = User.where(name: "Jane", email: "jane@example.com").first_or_create!(
   password: "password",
 )
 
-# Colors from https://coolors.co/palette/f94144-f3722c-f8961e-f9844a-f9c74f-90be6d-43aa8b-4d908e-577590-277da1
-
-insurance = Label.where(title: "Contracts").first_or_create!(
-  identifier: "01",
-  color: "#f94144", # Red
+one = Label.where(title: "Our Contracts").first_or_create!(
+  identifier: "001",
+  color: "#f44336", # Red
 )
 
-real_estate = Label.where(title: "Contracts").first_or_create!(
-  identifier: "02",
-  color: "#277da1", # Blue
-)
-
-lease = Label.where(title: "Lease").first_or_create!(
-  identifier: "01",
-  color: "#277da1", # Blue
-  parent: real_estate,
+two = Label.where(title: "Our Agreements").first_or_create!(
+  identifier: "001",
+  color: "#e81e63", # Pink
+  parent: one
 )
 
 Contract.where(title: "Basic Contract").first_or_create!(
   start_date: Date.today + 1.day,
   end_date: Date.today + 31.days,
   created_by: joe,
+  label: one,
   documents_attributes: [
     {
       title: "Basic PDF File",
@@ -47,12 +41,13 @@ Contract.where(title: "Basic Contract").first_or_create!(
       file: File.open(Rails.root.join("test/fixtures/files/basic_document.pdf"))
     }
   ]
-).update(label: insurance)
+)
 
 Contract.where(title: "Advanced Contract").first_or_create!(
   start_date: Date.today,
   end_date: Date.today + 365.days,
   created_by: jane,
+  label: two,
   documents_attributes: [
     {
       title: "My Advanced PDF File",
@@ -65,4 +60,4 @@ Contract.where(title: "Advanced Contract").first_or_create!(
       file: File.open(Rails.root.join("test/fixtures/files/advanced_document_2.pdf"))
     }
   ]
-).update(label: lease)
+)

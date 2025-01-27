@@ -2,6 +2,7 @@ class SuppliersController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    authorize Supplier
     @suppliers = policy_scope(Supplier)
   end
 

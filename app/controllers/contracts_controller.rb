@@ -1,10 +1,24 @@
 class ContractsController < ApplicationController
   before_action :authenticate_user!
   after_action :verify_policy_scoped, only: :pending
+  after_action :verify_authorized, only: :approve
 
   def index
-    # if admin? then all, otherwise only contracts made by that user.
-    @contracts = policy_scope(Contract)
+    @query = params[:query]
+    @query_keywords =
+      if current_user.privileged?
+        Contract.search_reflection(:advanced_search).attributes.keys - [ "all" ]
+      else
+        Contract.search_reflection(:search).attributes.keys - [ "all" ]
+      end
+    @contracts =
+      if current_user.privileged?
+        # HACK: Deal with how tags are stored internally in the database.
+        query = @query&.gsub(/tag:(?!\^)/, "tag:^")
+        policy_scope(Contract).advanced_search(query)
+      else
+        policy_scope(Contract).search(@query)
+      end
   end
 
   def show
@@ -12,7 +26,6 @@ class ContractsController < ApplicationController
   end
 
   def new
-    # HACK: Hardcoding one empty "document" to allow view to function.
     @contract = authorize Contract.new(documents_attributes: [ {} ])
     @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
   end
@@ -21,7 +34,10 @@ class ContractsController < ApplicationController
     @contract = Contract.new(contract_params)
 
     @contract.created_by = current_user
-    @contract.documents.each { |doc| doc.created_by = current_user }
+    @contract.documents.each do |document|
+      document.created_by = current_user
+      document.title ||= File.basename(document.file.filename.to_s, ".*").titleize
+    end
 
     authorize @contract
 
@@ -29,7 +45,7 @@ class ContractsController < ApplicationController
       redirect_to contracts_path, notice: "Contract successfully submitted."
     else
       @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
-      render :new
+      render :new, status: 422
     end
   end
 
@@ -40,22 +56,21 @@ class ContractsController < ApplicationController
   end
 
   def pending
+    authorize Contract
     @contracts = policy_scope(Contract).where(status: :pending)
-    # authorize :contract, :pending?
   end
 
   def approve
     @contract = authorize Contract.find(params["id"])
     @suppliers = policy_scope(Supplier)
     @affiliates = policy_scope(Affiliate)
+    @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
 
     if request.patch?
-      if @contract.update(contract_params.except(:documents_attributes).merge(status: :approved))
-        puts "Contract approved"
+      if @contract.update(contract_privileged_params.merge(status: :approved))
         redirect_to contracts_pending_path, notice: "Contract was successfully approved."
       else
-        puts @contract.errors.full_messages
-        render :approve
+        render :approve, status: 422
       end
     else
       render :approve
@@ -63,7 +78,15 @@ class ContractsController < ApplicationController
   end
 
   private
+
   def contract_params
+    params.require(:contract).permit(
+      :title,
+      documents_attributes: [ [ :file ] ]
+    )
+  end
+
+  def contract_privileged_params
     params.require(:contract).permit(
       :supplier_id,
       :affiliate_id,
@@ -71,7 +94,7 @@ class ContractsController < ApplicationController
       :end_date,
       :title,
       :label_id,
-      documents_attributes: [ [ :title, :file ] ]
+      documents_attributes: [ [ :file ] ]
     )
   end
 end

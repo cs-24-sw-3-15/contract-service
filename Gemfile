@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.0.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use sqlite3 as the database for Active Record
@@ -62,13 +62,19 @@ end
 gem "bootstrap"
 gem "sassc-rails"
 gem "sassc", "~> 2.1", "< 2.2"
-gem "font-awesome-sass", "~> 6.5"
+gem "font-awesome-sass", "~> 6.7"
 gem "devise", "~> 4.9"
 gem "chartkick"
 gem "pundit", "~> 2.4"
 
 gem "aasm", "~> 5.5"
 
-gem "after_commit_everywhere", "~> 1.4"
+gem "after_commit_everywhere", "~> 1.5"
 
 gem "ancestry", "~> 4.3"
+
+gem "color", "~> 1.8"
+
+gem "search_cop", "~> 1.4"
+
+gem "timecop", "~> 0.9.10"

@@ -1,16 +1,14 @@
-<div class="card card-body">
-  <h2><%= @contract.title %></h2>
-  <ul>
-    <% @contract.documents.each do |document| %>
-      <li>
-        <%= link_to document.title, url_for(document.file) %>
-      </li>
-    <% end %>
-  </ul>
-  <%= button_to "Destroy Contract",
-    contract_path(@contract),
-    method: :delete,
-    class: "btn btn-danger",
-    disabled: !policy(@contract).destroy?,
-    form: { data: { turbo_confirm: "Are you sure?" } } %>
+<h2><%= @contract.title %></h2>
+<div class="row mt-3">
+  <% @contract.documents.each do |document| %>
+    <div class="col-md-2 mb-3">
+      <%= render partial: "document", locals: {document: document} %>
+    </div>
+  <% end %>
 </div>
+<%= button_to "Destroy Contract",
+  contract_path(@contract),
+  method: :delete,
+  class: "btn btn-danger",
+  disabled: !policy(@contract).destroy?,
+  form: { data: { turbo_confirm: "Are you sure?" } } %>

@@ -9,6 +9,12 @@ class LabelPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    return true if @user.privileged?
+
+    false
+  end
+
   def show?
     return true if @user.privileged?
 

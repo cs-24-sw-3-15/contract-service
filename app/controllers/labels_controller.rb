@@ -2,7 +2,7 @@ class LabelsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @labels = policy_scope(Label)
+    @labels = policy_scope(Label).order(:tag)
   end
 
   def show

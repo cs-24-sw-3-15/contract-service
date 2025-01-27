@@ -13,27 +13,23 @@
 <% end %>
 
 <%= form_with model: @contract do |form| %>
-  <div>
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :label %>
-    <%= form.select :label_id, @labels, { include_blank: 'None' }, class: 'form-select' %>
+  <div class="mb-3" data-controller="documents" data-documents-target="attachments">
+    <label class="form-label">Documents</label>
+    <%= form.fields_for :documents do |form| %>
+      <%= form.file_field :file, class: "mb-1 form-control document-field", data: { action: "documents#ensureEmptyField" } %>
+    <% end %>
   </div>
 
-  <!-- TODO: Dynamically add multiple documents. -->
-  <%= form.fields_for :documents do |form| %>
-    <div>
-      <%= form.label :title, "Document Title" %>
-      <%= form.text_field :title %>
-    </div>
-    <div>
-      <%= form.label :title, "Document" %>
-      <%= form.file_field :file %>
-    </div>
-  <% end %>
-
-  <%= form.submit %>
+  <div class="mb-3">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
 <% end %>
+
+<template id="document-template">
+  <input class="mb-1 form-control document-field" data-action="documents#ensureEmptyField" type="file">
+</template>
