@@ -42,7 +42,11 @@
     </div>
   </div>
 
-  <div class="mb-3">
-    <%= f.submit "Approve", class: "btn btn-primary" %>
+  <div class="mb-3 d-flex gap-2">
+    <%= f.hidden_field :status, value: "approved", id: "status-approved" %>
+    <%= f.submit "Approve", class: "btn btn-primary", data: { status_field: "status-approved" } %>
+
+    <%= f.hidden_field :status, value: "denied", id: "status-denied" %>
+    <%= f.submit "Deny", class: "btn btn-danger", data: { status_field: "status-denied" } %>
   </div>
 <% end %>

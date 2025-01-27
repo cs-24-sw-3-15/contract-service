@@ -67,8 +67,8 @@ class ContractsController < ApplicationController
     @labels = policy_scope(Label).order(:tag).map { [ _1.stamp, _1.id ] }
 
     if request.patch?
-      if @contract.update(contract_privileged_params.merge(status: :approved))
-        redirect_to contracts_pending_path, notice: "Contract was successfully approved."
+      if @contract.update(contract_privileged_params)
+        redirect_to contracts_pending_path, notice: "Contract was successfully modified."
       else
         render :approve, status: 422
       end
@@ -93,6 +93,7 @@ class ContractsController < ApplicationController
       :start_date,
       :end_date,
       :title,
+      :status,
       :label_id,
       documents_attributes: [ [ :file ] ]
     )
