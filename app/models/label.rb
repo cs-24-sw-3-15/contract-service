@@ -62,7 +62,7 @@ class Label < ApplicationRecord
     Label.update_all("tag = REPLACE(tag, #{
       ActiveRecord::Base.connection.quote(old_tag + ".")
     }, #{
-      ActiveRecord::Base.connection.quote(tag + ".")
+      ActiveRecord::Base.connection.quote("^" + tag + ".")
     })")
   end
 end
