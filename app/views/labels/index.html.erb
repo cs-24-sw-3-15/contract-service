@@ -12,7 +12,7 @@
   <tbody>
   <% @labels.each do |label| %>
     <tr>
-      <td><%= label.tag %></td>
+      <td><%= label.tag&.delete_prefix("^") %></td>
       <td><%= label.title %></td>
       <td><span class="badge rounded-pill", style="background-color: <%= label.color %>"><%= label.color %></span></td>
       <td>
