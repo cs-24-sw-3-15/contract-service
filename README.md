@@ -1,9 +1,16 @@
 # contract-service
 
+<p align="center">
+  <img width="500" src="./media/contracts-example.png">
+  <img width="500" src="./media/dashboard-example.png">
+</p>
+
 ## Ruby version
+
 Ruby 3.3
 
 ## Gem system dependencies
+
 - [`ruby-dev`](https://pkgs.org/search/?q=ruby-dev)
 - [`libyaml-dev`](https://pkgs.org/search/?q=libyaml)
 - [`libvips-dev`](https://pkgs.org/search/?q=libvips)
@@ -12,6 +19,7 @@ Ruby 3.3
 ## Install Guide
 
 First install `rbenv`:
+
 ```bash
 # MacOS
 brew install rbenv mupdf nodejs
@@ -22,12 +30,14 @@ sudo yay -S rbenv base-devel libyaml libvips mupdf tesseract-data-eng nodejs
 ```
 
 Then install `rbenv`:
+
 ```bash
 rbenv init
 # Now follow its instructions to complete the installation.
 ```
 
 Go into your project and write the following commands:
+
 ```bash
 rbenv install 3.3.6
 rbenv local 3.3.6
@@ -60,6 +70,7 @@ bin/rails db:migrate
 
 For testing, there is some example data already generated for you in
 `db/seeds.db`. To use it write the following.
+
 ```bash
 bin/rails db:seed
 ```
@@ -85,8 +96,8 @@ See [PRODUCTION.md](./PRODUCTION.md)
 
 ## Things Left to do
 
-* How to run the test suite
+- How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+- Services (job queues, cache servers, search engines, etc.)
 
-* ...
+- ...
