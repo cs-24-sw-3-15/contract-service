@@ -4,7 +4,7 @@ class Label < ApplicationRecord
 
   enum :color_managed, [ :color_managed_unset, :color_manual, :color_managed ]
 
-  before_save :ensure_tag, if: :will_save_change_to_identifier?
+  before_validation :ensure_tag, if: :will_save_change_to_identifier?
   after_update :update_children_tags, if: :saved_change_to_tag?
   before_destroy :push_up_tagged_contracts
   before_save :ensure_managed_color
@@ -41,13 +41,8 @@ class Label < ApplicationRecord
     end
   end
 
-  def tag
-    # Dont show internal `^`.
-    super[1..] if super
-  end
-
   def stamp
-    "#{tag} - #{title}"
+    "#{tag&.delete_prefix("^")} - #{title}"
   end
 
   def ensure_tag
